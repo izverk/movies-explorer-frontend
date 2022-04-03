@@ -3,3 +3,7 @@
 
 /* Шрифты */
 @import url(./vendor/fonts/inter.css);
+
+html {
+	scroll-behavior: smooth;
+}
