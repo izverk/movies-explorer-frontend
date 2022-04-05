@@ -1,4 +1,4 @@
-.App {
+.app {
 	background-color: #fff;
 	color: #000;
 	font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
@@ -8,4 +8,52 @@
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+}
+
+.app__wide-section {
+	padding-left: 5.5%;
+	padding-right: 5.5%;
+}
+
+.app__narrow-section {
+	padding-left: 5.5%;
+	padding-right: 5.5%;
+}
+
+.app__link {
+	cursor: pointer;
+	text-decoration: none;
+	color: #000;
+	transition-property: opacity;
+	transition-duration: 0.5s;
+}
+
+.app__link:hover {
+	opacity: 0.7;
+	transition-duration: 0.5s;
+}
+
+.app__link_color_white {
+	color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+	.app__wide-section {
+		padding-left: 3.9%;
+		padding-right: 3.9%;
+	}
+	.app__narrow-section {
+		padding-left: 6.5%;
+		padding-right: 6.5%;
+	}
+}
+@media screen and (max-width: 320px) {
+	.app__wide-section {
+		padding-left: 4.4%;
+		padding-right: 4.4%;
+	}
+	.app__narrow-section {
+		padding-left: 5.6%;
+		padding-right: 5.6%;
+	}
 }

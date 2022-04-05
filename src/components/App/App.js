@@ -13,10 +13,10 @@ import Page404 from '../Page404/Page404'
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn] = useState(false);
 
   return (
-    <div className='App'>
+    <div className='app'>
       <Switch>
 
         <Route path='/signin'>
