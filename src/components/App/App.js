@@ -13,7 +13,7 @@ import Page404 from '../Page404/Page404'
 
 function App() {
 
-  const [loggedIn] = useState(false);
+  const [loggedIn] = useState(true);
 
   return (
     <div className='app'>
