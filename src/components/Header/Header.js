@@ -31,10 +31,10 @@ function Header({ loggedIn }) {
             <span className='header__profile-link-text'>
               Аккаунт
             </span>
-            <img className='header__profile-icon' src={profileIcon} alt='Иконка профиля пользователя' />
+            <img className='header__profile-icon' src={profileIcon} alt='Иконка кнопки перехода к профилю пользователя' />
           </Link>
-          <button className='app__link header__menu-button' type='button'>
-            <img className='header__menu-button-icon' src={menuIcon} alt='Кнопка профиля пользователя' title='Переход на страницу "Профиль пользователя"' />
+          <button className='app__link header__menu-button' type='button' title='Вызов меню навигации'>
+            <img className='header__menu-button-icon' src={menuIcon} alt='Иконка кнопки вызова меню навигации' />
           </button>
         </nav>
       )
