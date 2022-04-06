@@ -104,6 +104,12 @@
 	.header__nav-links {
 		visibility: hidden;
 	}
+	.header__nav-link {
+		display: none;
+	}
+	.header__profile-link {
+		display: none;
+	}
 	.header__menu-button {
 		visibility: visible;
 	}
