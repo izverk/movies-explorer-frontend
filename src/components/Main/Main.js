@@ -9,8 +9,7 @@ import Portfolio from '../Portfolio/Portfolio';
 
 function Main() {
     return (
-        <div className='Main'>
-            MAIN!!!
+        <div className='main'>
             <Promo />
             <NavTab />
             <AboutProject />
