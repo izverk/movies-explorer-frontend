@@ -29,9 +29,6 @@
 }
 
 @media screen and (max-width: 580px) {
-	.nav-tab {
-		padding: 23px;
-	}
 	.nav-tab__list-item {
 		margin-right: 24px;
 	}
