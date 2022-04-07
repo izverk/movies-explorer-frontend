@@ -1,11 +1,14 @@
 import React from 'react';
 import './Techs.css';
+import Divider from '../SectionTitle/SectionTitle';
 
 function Techs() {
     return (
-        <div className='techs' id='techs'>
-            Технологии
-        </div>
+        <section className='techs' id='techs'>
+            <Divider>
+                Технологии
+            </Divider>
+        </section>
     );
 }
 
