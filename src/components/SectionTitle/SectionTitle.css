@@ -1,0 +1,26 @@
+.section-title {
+	border-bottom: 1px solid #000;
+}
+
+.section-title__title {
+	max-width: 600px;
+	font-weight: 400;
+	font-size: 22px;
+	line-height: 27px;
+	letter-spacing: -0.04em;
+	margin: 0 0 23px;
+}
+
+@media screen and (max-width: 768px) {
+	.section-title__title {
+		max-width: 78.1%;
+	}
+}
+@media screen and (max-width: 320px) {
+	.section-title__title {
+		max-width: 88.8%;
+		font-size: 18px;
+		line-height: 22px;
+		margin-bottom: 28px;
+	}
+}
