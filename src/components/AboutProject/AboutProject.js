@@ -1,13 +1,13 @@
 import React from 'react';
 import './AboutProject.css';
-import Divider from '../SectionTitle/SectionTitle';
+import SectionTitle from '../SectionTitle/SectionTitle';
 
 function AboutProject() {
     return (
         <section className="about-project" id='about-project'>
-            <Divider>
+            <SectionTitle>
                 О проекте
-            </Divider>
+            </SectionTitle>
             <ul className='about-project__columns'>
                 <li className='about-project__column'>
                     <h3 className='about-project__column-title'>
