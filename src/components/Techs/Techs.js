@@ -3,7 +3,7 @@ import './Techs.css';
 
 function Techs() {
     return (
-        <div className='Techs' id='Techs'>
+        <div className='techs' id='techs'>
             Технологии
         </div>
     );
