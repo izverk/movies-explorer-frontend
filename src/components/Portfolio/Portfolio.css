@@ -24,6 +24,10 @@
 	border-bottom: 1px solid #e8e8e8;
 }
 
+.portfolio__list-item:last-child {
+	border: none;
+}
+
 .portfolio__project-name {
 	font-weight: 400;
 	font-size: 30px;
@@ -51,7 +55,7 @@
 	.portfolio__title {
 		font-size: 14px;
 		line-height: 20px;
-		margin-bottom: 20px;
+		margin-bottom: 21px;
 	}
 	.portfolio__list-item {
 		padding-bottom: 19px;
