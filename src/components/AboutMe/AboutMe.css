@@ -1,5 +1,5 @@
 .about-me {
-	padding: 110px 70px 115px;
+	padding: 110px 70px 106px;
 }
 
 .about-me__table {
@@ -53,7 +53,7 @@
 
 @media screen and (max-width: 768px) {
 	.about-me {
-		padding: 90px 50px 80px;
+		padding: 90px 50px 71px;
 	}
 	.about-me__table {
 		margin-bottom: 90px;
@@ -98,11 +98,11 @@
 }
 @media screen and (max-width: 320px) {
 	.about-me {
-		padding: 70px 14px 70px;
+		padding: 70px 14px 51px;
 	}
 	.about-me__table {
 		padding-top: 60px;
-		margin-bottom: 71px;
+		margin-bottom: 70px;
 	}
 	.about-me__photo-column {
 		width: 292px;
