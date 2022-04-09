@@ -3,13 +3,32 @@ import './Footer.css';
 
 function Footer() {
     return (
-        <footer className="Footer">
-            ПОДВАЛ САЙТА
-            <span>Учебный проект Яндекс.Практикум х BeatFilm.</span>
-            <span>© 2022</span>
-            <a href='https://practicum.yandex.ru/' rel='noreferrer' target='_blank'>Яндекс.Практикум</a>
-            <a href='https://github.com/' rel='noreferrer' target='_blank'>Github</a>
-            <a href='https://www.facebook.com/' rel='noreferrer' target='_blank'>Facebook</a>
+        <footer className="footer">
+            <h2 className='footer__title'>
+                Учебный проект Яндекс.Практикум х BeatFilm.
+            </h2>
+            <div className='footer__container'>
+                <ul className='footer__links-list'>
+                    <li className='footer__links-item'>
+                        <a className='app__links footer__link' href='https://practicum.yandex.ru/' rel='noreferrer' target='_blank'>
+                            Яндекс.Практикум
+                        </a>
+                    </li>
+                    <li className='footer__links-item'>
+                        <a className='app__links footer__link' href='https://github.com/' rel='noreferrer' target='_blank'>
+                            Github
+                        </a>
+                    </li>
+                    <li className='footer__links-item'>
+                        <a className='app__links footer__link' href='https://www.facebook.com/' rel='noreferrer' target='_blank'>
+                            Facebook
+                        </a>
+                    </li>
+                </ul>
+                <span className='footer__copyright'>
+                    © 2022
+                </span>
+            </div>
         </footer>
     );
 }
