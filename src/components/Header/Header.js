@@ -15,7 +15,7 @@ function Header({ loggedIn }) {
           <Link to='/signup' className='app__link app__link_color_white header__signup-link'>
             Регистрация
           </Link>
-          <Link to='/signin' className='app__link header__signin-link'>
+          <Link to='/signin' className='app__link app__button header__signin-link'>
             Войти
           </Link>
         </div>

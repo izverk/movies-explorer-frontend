@@ -46,6 +46,7 @@
 	align-items: center;
 	position: relative;
 	padding: 0 0 0 44px;
+	color: #000;
 }
 
 .header__nav-link {
@@ -73,7 +74,7 @@
 	font-weight: 500;
 	font-size: 14px;
 	line-height: 16px;
-	margin: 13px;
+	margin-right: 13px;
 }
 
 .header__profile-icon {
@@ -87,7 +88,7 @@
 
 .header__menu-button {
 	position: absolute;
-	top: -2;
+	top: -22px;
 	right: 0;
 	visibility: hidden;
 	padding: 0;
@@ -125,5 +126,15 @@
 		height: 26px;
 		padding: 5px 12px;
 		font-size: 10px;
+	}
+	.header__menu-button {
+		top: -19px;
+		right: 2px;
+	}
+	.header__menu-button-icon {
+		/* width: 40px;
+		height: 43px; */
+		width: 36px;
+		height: 39px;
 	}
 }
