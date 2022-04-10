@@ -23,18 +23,22 @@
 .app__link {
 	cursor: pointer;
 	text-decoration: none;
-	color: #000;
+	color: inherit;
 	transition-property: opacity;
-	transition-duration: 0.5s;
+	transition-duration: 0.3s;
 }
 
 .app__link:hover {
 	opacity: 0.7;
-	transition-duration: 0.5s;
+	transition-duration: 0.3s;
 }
 
 .app__link_color_white {
 	color: #fff;
+}
+
+.app__button:hover {
+	opacity: 0.8;
 }
 
 @media screen and (max-width: 768px) {
