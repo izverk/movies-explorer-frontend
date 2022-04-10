@@ -13,7 +13,8 @@ import Page404 from '../Page404/Page404'
 
 function App() {
 
-  const [loggedIn] = useState(false);
+  const [loggedIn] = useState(true);
+  const [isMoviesLoading] = useState(false);
 
   return (
     <div className='app'>
@@ -38,7 +39,7 @@ function App() {
 
             <Route path='/movies'>
               <Header loggedIn={loggedIn} />
-              <Movies />
+              <Movies isMoviesLoading={isMoviesLoading} />
               <Footer />
             </Route>
 

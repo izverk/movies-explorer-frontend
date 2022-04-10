@@ -1,11 +1,15 @@
 import React from 'react';
 import './Movies.css';
+import SearchForm from '../SearchForm/SearchForm';
+import Preloader from '../Preloader/Preloader';
 
-function Movies() {
+function Movies({ isMoviesLoading }) {
+
     return (
-        <div className="Movies">
-            Movies
-        </div>
+        <section className="movies">
+            <SearchForm />
+            {isMoviesLoading && <Preloader />}
+        </section>
     );
 }
 
