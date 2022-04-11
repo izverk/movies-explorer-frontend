@@ -1,6 +1,9 @@
 import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import './MoviesCard.css';
-import moviePoster from '../../images/pic__COLOR_pic(1).jpg'
+import moviePoster from '../../images/pic__COLOR_pic(1).jpg';
+import MoviesLikeButton from '../MoviesLikeButton/MoviesLikeButton';
+import MoviesDelButton from '../MoviesDelButton/MoviesDelButton';
 
 function MoviesCard({ movie }) {
 
@@ -18,8 +21,14 @@ function MoviesCard({ movie }) {
           <span className='movies-card__name'>
             {movie.nameRU}
           </span>
-          <button className={`movies-card__like-button${movie.isLiked ? ' movies-card__like-button_active' : ''}`}>
-          </button>
+          <Switch>
+            <Route path='/movies'>
+              <MoviesLikeButton movie={movie} />
+            </Route>
+            <Route path='/saved-movies'>
+              <MoviesDelButton />
+            </Route>
+          </Switch>
         </div>
         <span className='movies-card__time'>
           {movie.duration}

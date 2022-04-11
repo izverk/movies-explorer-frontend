@@ -15,6 +15,7 @@ function App() {
 
   const [loggedIn] = useState(true);
   const [isMoviesLoading] = useState(false);
+  const [isSavedMoviesLoading] = useState(false);
 
   return (
     <div className='app'>
@@ -45,7 +46,7 @@ function App() {
 
             <Route path='/saved-movies'>
               <Header loggedIn={loggedIn} />
-              <SavedMovies />
+              <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
               <Footer />
             </Route>
 

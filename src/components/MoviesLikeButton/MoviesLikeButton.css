@@ -1,0 +1,14 @@
+.movies-like-button {
+	padding: 0;
+	margin: 0;
+	width: 14px;
+	height: 12px;
+	cursor: pointer;
+	background: transparent url(../../images/icon_like.svg) center / 100% 100%
+		no-repeat;
+	border: none;
+}
+
+.movies-like-button_active {
+	background-image: url(../../images/icon_like_active.svg);
+}

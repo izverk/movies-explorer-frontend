@@ -14,7 +14,6 @@
 
 .footer__container {
 	padding-top: 20px;
-	padding-bottom: 20px;
 	display: flex;
 	flex-flow: row-reverse wrap;
 	justify-content: space-between;
@@ -90,7 +89,6 @@
 	}
 	.footer__container {
 		padding-top: 30px;
-		padding-bottom: 10px;
 	}
 	.footer__copyright {
 		font-size: 12px;
