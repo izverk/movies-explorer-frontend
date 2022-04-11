@@ -7,10 +7,10 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 function Movies({ isMoviesLoading }) {
 
   return (
-    <section className="movies">
+    <main className="movies">
       <SearchForm />
       {isMoviesLoading ? <Preloader /> : <MoviesCardList />}
-    </section>
+    </main>
   );
 }
 
