@@ -12,7 +12,7 @@ function Header({ loggedIn }) {
       <Logo />
       {!loggedIn ? (
         <div className='header__reg-links'>
-          <Link to='/signup' className='app__link app__link_color_white header__signup-link'>
+          <Link to='/signup' className='app__link header__signup-link'>
             Регистрация
           </Link>
           <Link to='/signin' className='app__link app__button header__signin-link'>
