@@ -25,34 +25,6 @@
 	margin-bottom: auto;
 }
 
-/* .auth-form__input-wrapper {
-	width: 100%;
-}
-
-.auth-form__input-label {
-	display: block;
-	padding: 20px 0 10px;
-	font-weight: 400;
-	font-size: 10px;
-	line-height: 12px;
-	color: #a0a0a0;
-}
-
-.auth-form__input {
-	width: 100%;
-	padding: 15px;
-	box-sizing: border-box;
-	font-weight: 400;
-	font-size: 13px;
-	line-height: 16px;
-	border: none;
-	background: #f9f9f9;
-	border-radius: 8px;
-}
-.auth-form__input:focus {
-	outline: none;
-} */
-
 .auth-form__input-error {
 	padding-top: 10px;
 	display: block;
