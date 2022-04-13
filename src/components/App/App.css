@@ -27,7 +27,6 @@
 	transition-property: opacity;
 	transition-duration: 0.3s;
 }
-
 .app__link:hover {
 	opacity: 0.7;
 	transition-duration: 0.3s;
@@ -36,7 +35,6 @@
 .app__button {
 	border: none;
 }
-
 .app__button:hover {
 	opacity: 0.8;
 }
