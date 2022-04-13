@@ -5,7 +5,7 @@ import { movies } from '../../utils/constants';
 
 function MoviesCardList() {
 
-  const [isMoreButtonVisible] = useState(false);
+  const [isMoreButtonVisible] = useState(true);
 
   return (
     <div className='movies-card-list'>

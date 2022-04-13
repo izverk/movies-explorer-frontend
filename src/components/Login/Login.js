@@ -1,14 +1,30 @@
-import { Link } from 'react-router-dom';
 import './Login.css';
-import Logo from '../Logo/Logo';
+import AuthForm from '../AuthForm/AuthForm';
+import Input from '../Input/Input';
 
 function Login() {
     return (
-        <>
-            <Logo />
-            <span>Ещё не зарегистрированы?</span>
-            <Link to='/signup'>Регистрация</Link>
-        </>
+        <AuthForm
+            title='Рады видеть!'
+            buttonText='Войти'
+            text='Ещё не зарегистрированы?'
+            linkText='Регистрация'
+            linkPath='/signup'
+        >
+            <Input
+                labelText='E-mail'
+                type='email'
+                name='email-input'
+                id='email-input'
+                defaultValue='pochta@yandex.ru'
+            />
+            <Input
+                labelText='Пароль'
+                type='password'
+                name='password-input'
+                id='password-input'
+            />
+        </AuthForm>
     );
 }
 

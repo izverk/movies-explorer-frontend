@@ -15,7 +15,7 @@ function App() {
 
   const [loggedIn] = useState(true);
   const [isMoviesLoading] = useState(false);
-  const [isSavedMoviesLoading] = useState(false);
+  const [isSavedMoviesLoading] = useState(true);
 
   return (
     <div className='app'>

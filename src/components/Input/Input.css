@@ -1,0 +1,27 @@
+.input {
+	width: 100%;
+}
+
+.input__label {
+	display: block;
+	padding: 20px 0 10px;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a0a0a0;
+}
+
+.input__input {
+	width: 100%;
+	padding: 15px;
+	box-sizing: border-box;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 16px;
+	border: none;
+	background: #f9f9f9;
+	border-radius: 8px;
+}
+.auth-form__input:focus {
+	outline: none;
+}

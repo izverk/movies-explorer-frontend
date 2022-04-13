@@ -1,0 +1,131 @@
+.auth-form {
+	padding-top: 70px;
+	padding-bottom: 70px;
+	margin: 0 auto;
+	width: 396px;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	min-height: 700px;
+	box-sizing: border-box;
+}
+
+.auth-form__title {
+	padding: 40px 0 20px;
+	margin: 0;
+	width: 100%;
+	font-weight: 500;
+	font-size: 24px;
+	line-height: 29px;
+	text-align: left;
+}
+
+.auth-form__inputs-container {
+	width: 100%;
+	margin-bottom: auto;
+}
+
+/* .auth-form__input-wrapper {
+	width: 100%;
+}
+
+.auth-form__input-label {
+	display: block;
+	padding: 20px 0 10px;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	color: #a0a0a0;
+}
+
+.auth-form__input {
+	width: 100%;
+	padding: 15px;
+	box-sizing: border-box;
+	font-weight: 400;
+	font-size: 13px;
+	line-height: 16px;
+	border: none;
+	background: #f9f9f9;
+	border-radius: 8px;
+}
+.auth-form__input:focus {
+	outline: none;
+} */
+
+.auth-form__input-error {
+	padding-top: 10px;
+	display: block;
+	font-weight: 400;
+	font-size: 10px;
+	line-height: 12px;
+	color: #ff3055;
+	visibility: hidden;
+}
+.auth-form__input-error_active {
+	visibility: visible;
+}
+
+.auth-form__buttons-container {
+	width: 100%;
+}
+
+.auth-form__submit-button {
+	padding: 13px 126px 15px 124px;
+	margin-bottom: 16px;
+	width: 100%;
+	box-sizing: border-box;
+	display: block;
+	background: #3456f3;
+	border-radius: 3px;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #ffffff;
+}
+
+.auth-form__link-wrapper {
+	display: block;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 17px;
+	text-align: center;
+	color: #a0a0a0;
+}
+
+.auth-form__link {
+	color: #3456f3;
+}
+
+@media screen and (max-width: 768px) {
+	.auth-form {
+		padding-top: 232px;
+		padding-bottom: 232px;
+		min-height: 1024px;
+	}
+}
+@media screen and (max-width: 456px) {
+	.auth-form {
+		width: 81%;
+		padding-top: 56px;
+		padding-bottom: 30px;
+		min-height: 780px;
+		align-items: center;
+	}
+	.auth-form__title {
+		padding: 50px 0 60px;
+		text-align: center;
+	}
+	.auth-form__submit-button {
+		padding: 15px 26%;
+		margin-bottom: 14px;
+		font-weight: 500;
+		font-size: 12px;
+		line-height: 15px;
+	}
+	.auth-form__link-wrapper {
+		font-size: 12px;
+		line-height: 15px;
+	}
+}
