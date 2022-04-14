@@ -3,8 +3,11 @@
 Репозиторий фронтенд-части проекта `movies-explorer`.
 
 Размещение проекта (Яндекс.Облако):<br> фронтенд -
-https://movies-explorer.izverk.nomoredomains.work/;<br> бэкенд -
+https://movies-explorer-frontend.izverk.nomoredomains.work/;<br> бэкенд -
 https://api.movies-explorer.izver.nomoredomains.work/
+
+Ссылка на макет в фигме -
+https://www.figma.com/file/LiJD7XRXHn1Bl4Aod1vIcD/diplom-layout?node-id=891%3A3857
 
 ## Что за проект и о чем он
 
@@ -23,18 +26,8 @@ https://api.movies-explorer.izver.nomoredomains.work/
 закрепления практических навыков веб-разработки. Проект является выпускной
 дипломной работой курса "Веб-разработчик".
 
-## Фронтенд-часть проекта `movies-explorer`, представленная в данном репозитории, обеспечивает следующую функциональность:
-
-"
-
-- ...;
-- ...;
-- ...;
-- ...;
-- ....
-
 ## Основные из примененных инструментов, технологий, концепций:
 
-- HNML, CSS;
+- HTML, CSS;
 - Java Script;
-- React;
+- React, CRA.
