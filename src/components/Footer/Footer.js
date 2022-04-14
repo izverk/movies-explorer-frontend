@@ -10,17 +10,17 @@ function Footer() {
             <div className='footer__container'>
                 <ul className='footer__links-list'>
                     <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://practicum.yandex.ru/' rel='noreferrer' target='_blank'>
+                        <a className='app__links footer__link' href='https://practicum.yandex.ru/' rel='noreferrer' target='_blank' title='https://practicum.yandex.ru/'>
                             Яндекс.Практикум
                         </a>
                     </li>
                     <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://github.com/' rel='noreferrer' target='_blank'>
+                        <a className='app__links footer__link' href='https://github.com/' rel='noreferrer' target='_blank' title='https://github.com/'>
                             Github
                         </a>
                     </li>
                     <li className='footer__links-item'>
-                        <a className='app__links footer__link' href='https://www.facebook.com/' rel='noreferrer' target='_blank'>
+                        <a className='app__links footer__link' href='https://www.facebook.com/' rel='noreferrer' target='_blank' title='https://www.facebook.com/'>
                             Facebook
                         </a>
                     </li>

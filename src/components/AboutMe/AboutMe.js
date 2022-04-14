@@ -23,10 +23,10 @@ function AboutMe() {
                         Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена
                         и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
                     </p>
-                    <a className='app__link about-me__link' href='app__link https://ru-ru.facebook.com'>
+                    <a className='app__link about-me__link' href='https://ru-ru.facebook.com' rel='noreferrer' target='_blank' title='https://ru-ru.facebook.com'>
                         Facebook
                     </a>
-                    <a className='app__link about-me__link' href='app__link https://github.com/izverk'>
+                    <a className='app__link about-me__link' href='https://github.com/izverk' rel='noreferrer' target='_blank' title='Моя страница на Github'>
                         Github
                     </a>
                 </div>

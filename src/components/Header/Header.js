@@ -22,10 +22,10 @@ function Header({ loggedIn, openModalMenu }) {
         ) : (
           <>
             <nav className='header__nav-bar'>
-              <NavLink to='/movies' className='app__link header__nav-link' activeClassName='header__nav-link_active'>
+              <NavLink to='/movies' className='app__link header__nav-link' activeClassName='header__nav-link_active' title='На страницу поиска фильмов'>
                 Фильмы
               </NavLink>
-              <NavLink to='/saved-movies' className='app__link header__nav-link' activeClassName='header__nav-link_active'>
+              <NavLink to='/saved-movies' className='app__link header__nav-link' activeClassName='header__nav-link_active' title='На страницу страницу просмотра и поиска сохраненных фильмов'>
                 Сохраненные фильмы
               </NavLink>
               <ProfileButton />

@@ -10,26 +10,26 @@ function Portfolio() {
             </h4>
             <ul className='portfolio__list'>
                 <li className='portfolio__list-item'>
-                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/how-to-learn' rel='noreferrer' target='_blank'>
+                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/how-to-learn' rel='noreferrer' target='_blank' title='https://github.com/izverk/how-to-learn'>
                         Статичный сайт
                     </a>
-                    <a className='app__link' href='https://github.com/izverk/how-to-learn' rel='noreferrer' target='_blank'>
+                    <a className='app__link' href='https://github.com/izverk/how-to-learn' rel='noreferrer' target='_blank' title='https://github.com/izverk/how-to-learn'>
                         <img className='portfolio__arrow-icon' src={arrowIcon} alt='Иконка-стрелка' />
                     </a>
                 </li>
                 <li className='portfolio__list-item'>
-                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/russian-travel' rel='noreferrer' target='_blank'>
+                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/russian-travel' rel='noreferrer' target='_blank' title='https://github.com/izverk/russian-travel'>
                         Адаптивный сайт
                     </a>
-                    <a className='app__link portfolio__project-arrow' href='https://github.com/izverk/russian-travel' rel='noreferrer' target='_blank'>
+                    <a className='app__link portfolio__project-arrow' href='https://github.com/izverk/russian-travel' rel='noreferrer' target='_blank' title='https://github.com/izverk/russian-travel'>
                         <img className='portfolio__arrow-icon' src={arrowIcon} alt='Иконка-стрелка' />
                     </a>
                 </li>
                 <li className='portfolio__list-item'>
-                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/react-mesto-api-full' rel='noreferrer' target='_blank'>
+                    <a className='app__link portfolio__project-name' href='https://github.com/izverk/react-mesto-api-full' rel='noreferrer' target='_blank' title='https://github.com/izverk/react-mesto-api-full'>
                         Одностраничное приложение
                     </a>
-                    <a className='app__link portfolio__project-arrow' href='https://github.com/izverk/react-mesto-api-full' rel='noreferrer' target='_blank'>
+                    <a className='app__link portfolio__project-arrow' href='https://github.com/izverk/react-mesto-api-full' rel='noreferrer' target='_blank' title='https://github.com/izverk/react-mesto-api-full'>
                         <img className='portfolio__arrow-icon' src={arrowIcon} alt='Иконка-стрелка' />
                     </a>
                 </li>
