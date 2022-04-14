@@ -3,7 +3,7 @@
 Репозиторий фронтенд-части проекта `movies-explorer`.
 
 Размещение проекта (Яндекс.Облако):<br> фронтенд -
-https://movies-explorer-frontend.izverk.nomoredomains.work/;<br> бэкенд -
+https://movies-explorer.izverk.nomoredomains.work/;<br> бэкенд -
 https://api.movies-explorer.izver.nomoredomains.work/
 
 Ссылка на макет в фигме -
