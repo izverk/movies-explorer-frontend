@@ -8,6 +8,7 @@
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
+	position: relative;
 }
 
 .app__wide-section {
@@ -34,9 +35,13 @@
 
 .app__button {
 	border: none;
+	background: none;
+	transition-property: opacity;
+	transition-duration: 0.3s;
 }
 .app__button:hover {
 	opacity: 0.8;
+	transition-duration: 0.3s;
 }
 
 @media screen and (max-width: 768px) {

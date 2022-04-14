@@ -1,6 +1,10 @@
+import { useHistory } from 'react-router-dom';
 import './Profile.css';
 
-function Profile() {
+function Profile({ loggedIn, setLoggedIn }) {
+
+    const history = useHistory();
+
     return (
         <form className="profile" name='user-profile-form'
             noValidate>
@@ -39,10 +43,16 @@ function Profile() {
                 </div>
             </div>
             <div className='profile__buttons-container'>
-                <button className='app__link profile__button' type='submit'>
+                <button
+                    className='app__link profile__button' type='submit'>
                     Редактировать
                 </button>
-                <button className='app__link profile__button' type='button'>
+                <button
+                    className='app__link profile__button'
+                    type='button'
+                    onClick={() => {
+                        setLoggedIn(false); history.push('/')
+                    }} >
                     Выйти из аккаунта
                 </button>
             </div>

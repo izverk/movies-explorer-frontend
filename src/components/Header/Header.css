@@ -3,15 +3,20 @@
 	padding-bottom: 18px;
 	background-color: #073042;
 	color: #fff;
+}
+
+.header__container {
+	width: 100%;
 	display: flex;
 	align-items: center;
+	position: relative;
 }
 
 .header_background_no {
 	background-color: inherit;
 }
 
-.header__reg-links {
+.header__reg-bar {
 	margin: 0;
 	padding: 0;
 	list-style: none;
@@ -41,7 +46,7 @@
 	line-height: 16px;
 }
 
-.header__nav-links {
+.header__nav-bar {
 	flex-grow: 1;
 	display: flex;
 	align-items: center;
@@ -56,67 +61,38 @@
 	font-size: 13px;
 	line-height: 18px;
 }
-
 .header__nav-link_active {
 	font-weight: 500;
 }
-
 .header__nav-link:first-child {
 	margin-right: 16px;
 }
-
-.header__profile-link {
-	display: flex;
-	align-items: center;
-	margin-left: auto;
-}
-
-.header__profile-link-text {
-	font-weight: 500;
-	font-size: 14px;
-	line-height: 16px;
-	margin-right: 13px;
-}
-
-.header__profile-icon {
-	box-sizing: border-box;
-	width: 30px;
-	height: 30px;
-	padding: 10px;
-	border-radius: 6px;
-	background-color: #f9f9f9;
+.header__nav-link:nth-child(2) {
+	margin-right: auto;
 }
 
 .header__menu-button {
+	display: block;
 	position: absolute;
-	top: -22px;
+	top: -3px;
 	right: 0;
+	width: 44px;
+	height: 44px;
 	visibility: hidden;
 	padding: 0;
 	border: none;
 	background-color: #fff;
-}
-
-.header__menu-button-icon {
-	width: 44px;
-	height: 44px;
+	background-image: url(../../images/icon_menu.svg);
 }
 
 @media screen and (max-width: 768px) {
-	.header__nav-links {
-		visibility: hidden;
-	}
-	.header__nav-link {
-		display: none;
-	}
-	.header__profile-link {
+	.header__nav-bar {
 		display: none;
 	}
 	.header__menu-button {
 		visibility: visible;
 	}
 }
-
 @media screen and (max-width: 320px) {
 	.header__signup-link {
 		margin-right: 14px;
@@ -129,13 +105,8 @@
 		font-size: 10px;
 	}
 	.header__menu-button {
-		top: -19px;
-		right: 2px;
-	}
-	.header__menu-button-icon {
-		/* width: 40px;
-		height: 43px; */
-		width: 36px;
-		height: 39px;
+		top: -1px;
+		width: 40px;
+		height: 43px;
 	}
 }

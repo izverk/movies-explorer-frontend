@@ -27,7 +27,7 @@
 }
 
 .movies-card__caption-container {
-	padding: 16px;
+	padding: 16px 24px 16px 16px;
 }
 
 .movies-card__name-and-like-container {
@@ -56,17 +56,13 @@
 	color: #a0a0a0;
 }
 
-.movies-card__movies-like-button {
-	margin-right: 8px;
-}
-
 .movies-card__movies-del-button {
 	margin-right: 11.6px;
 }
 
 @media screen and (max-width: 768px) {
 	.movies-card__caption-container {
-		padding: 14px;
+		padding: 14px 22px 14px 14px;
 	}
 	.movies-card__name-and-like-container {
 		margin-bottom: 15px;
@@ -77,7 +73,7 @@
 }
 @media screen and (max-width: 320px) {
 	.movies-card__caption-container {
-		padding: 14px 10px 14px 14px;
+		padding: 14px 18px 14px 14px;
 	}
 	.movies-card__name-and-like-container {
 		margin-bottom: 14px;

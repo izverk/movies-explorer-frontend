@@ -10,12 +10,15 @@ import Profile from '../Profile/Profile'
 import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Page404 from '../Page404/Page404'
+import ModalMenu from '../ModalMenu/ModalMenu';
 
 function App() {
 
-  const [loggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
   const [isMoviesLoading] = useState(false);
-  const [isSavedMoviesLoading] = useState(true);
+  const [isSavedMoviesLoading] = useState(false);
+  const [modalMenuState, setModalMenuState] = useState(false);
+  const changeModalMenuState = () => { setModalMenuState(!modalMenuState) };
 
   return (
     <div className='app'>
@@ -33,26 +36,26 @@ function App() {
           <Switch>
 
             <Route exact path='/'>
-              <Header loggedIn={loggedIn} />
+              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <Main />
               <Footer />
             </Route>
 
             <Route path='/movies'>
-              <Header loggedIn={loggedIn} />
+              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <Movies isMoviesLoading={isMoviesLoading} />
               <Footer />
             </Route>
 
             <Route path='/saved-movies'>
-              <Header loggedIn={loggedIn} />
+              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
               <Footer />
             </Route>
 
             <Route path='/profile'>
-              <Header loggedIn={loggedIn} />
-              <Profile />
+              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+              <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             </Route>
 
             <Route path='*'>
@@ -62,6 +65,7 @@ function App() {
         </Route>
 
       </Switch>
+      <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
     </div>
   );
 }
