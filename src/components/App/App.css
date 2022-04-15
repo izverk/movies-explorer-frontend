@@ -1,0 +1,66 @@
+.app {
+	background-color: #fff;
+	color: #000;
+	font-family: 'Inter', 'Arial', 'Helvetica', sans-serif;
+	min-width: 320px;
+	max-width: 1280px;
+	margin: 0 auto;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+
+.app__wide-section {
+	padding-left: 5.5%;
+	padding-right: 5.5%;
+}
+
+.app__narrow-section {
+	padding-left: 5.5%;
+	padding-right: 5.5%;
+}
+
+.app__link {
+	cursor: pointer;
+	text-decoration: none;
+	color: inherit;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+}
+.app__link:hover {
+	opacity: 0.7;
+	transition-duration: 0.3s;
+}
+
+.app__button {
+	border: none;
+	background: none;
+	transition-property: opacity;
+	transition-duration: 0.3s;
+}
+.app__button:hover {
+	opacity: 0.8;
+	transition-duration: 0.3s;
+}
+
+@media screen and (max-width: 768px) {
+	.app__wide-section {
+		padding-left: 3.9%;
+		padding-right: 3.9%;
+	}
+	.app__narrow-section {
+		padding-left: 6.5%;
+		padding-right: 6.5%;
+	}
+}
+@media screen and (max-width: 320px) {
+	.app__wide-section {
+		padding-left: 4.4%;
+		padding-right: 4.4%;
+	}
+	.app__narrow-section {
+		padding-left: 5.6%;
+		padding-right: 5.6%;
+	}
+}

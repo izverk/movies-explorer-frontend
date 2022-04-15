@@ -1,0 +1,20 @@
+.profile-button {
+	display: flex;
+	align-items: center;
+}
+
+.profile-button__text {
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 16px;
+	margin-right: 13px;
+}
+
+.profile-button__icon {
+	box-sizing: border-box;
+	width: 30px;
+	height: 30px;
+	padding: 10px;
+	border-radius: 6px;
+	background-color: #f9f9f9;
+}

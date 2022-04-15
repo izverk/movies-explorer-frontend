@@ -1,0 +1,38 @@
+.nav-tab {
+	padding: 24px;
+	background-color: #000000;
+	color: #fff;
+	display: flex;
+}
+
+.nav-tab__list {
+	display: flex;
+	margin: auto;
+	padding: 0;
+	list-style: none;
+}
+
+.nav-tab__list-item {
+	margin-right: 40px;
+}
+
+.nav-tab__list-item:last-child {
+	margin-right: 0;
+}
+
+.nav-tab__link {
+	color: #fff;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 16px;
+	text-decoration: underline;
+}
+
+@media screen and (max-width: 580px) {
+	.nav-tab__list-item {
+		margin-right: 24px;
+	}
+	.nav-tab__link {
+		font-size: 11px;
+	}
+}

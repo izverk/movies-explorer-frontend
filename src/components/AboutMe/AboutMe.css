@@ -1,0 +1,128 @@
+.about-me {
+	padding: 110px 70px 106px;
+}
+
+.about-me__table {
+	padding: 66px 0 0;
+	margin: 0 0 100px;
+	display: flex;
+	flex-flow: row-reverse nowrap;
+	justify-content: space-between;
+}
+
+.about-me__photo-column {
+	width: 270px;
+	height: 327px;
+}
+
+.about-me__info-column {
+	max-width: 52.5%;
+}
+
+.about-me__name {
+	padding: 0;
+	margin: 0 0 18px;
+	font-weight: 400;
+	font-size: 50px;
+	line-height: 58px;
+	letter-spacing: -0.04em;
+}
+
+.about-me__job {
+	padding: 0;
+	margin: 0 0 26px;
+	font-weight: 500;
+	font-size: 18px;
+	line-height: 20px;
+}
+
+.about-me__topic {
+	padding: 0;
+	margin: 0 0 99px;
+	font-weight: 400;
+	font-size: 14px;
+	line-height: 22px;
+}
+
+.about-me__link {
+	margin: 0 20px 0 0;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 17px;
+}
+
+@media screen and (max-width: 768px) {
+	.about-me {
+		padding: 90px 50px 71px;
+	}
+	.about-me__table {
+		margin-bottom: 90px;
+	}
+	.about-me__photo-column {
+		width: 255px;
+		height: 307px;
+	}
+	.about-me__info-column {
+		max-width: 54.5%;
+		margin-right: 5%;
+	}
+	.about-me__name {
+		margin-bottom: 16px;
+		font-size: 40px;
+		line-height: 40px;
+	}
+	.about-me__job {
+		margin-bottom: 20px;
+		font-size: 12px;
+		line-height: 18px;
+	}
+	.about-me__topic {
+		margin-bottom: 87px;
+		font-size: 12px;
+		line-height: 18px;
+	}
+}
+@media screen and (max-width: 650px) {
+	.about-me__table {
+		flex-wrap: wrap;
+		justify-content: center;
+	}
+	.about-me__info-column {
+		max-width: 100%;
+		width: 100%;
+		margin-right: 0;
+	}
+	.about-me__photo-column {
+		margin-bottom: 40px;
+	}
+}
+@media screen and (max-width: 320px) {
+	.about-me {
+		padding: 70px 14px 51px;
+	}
+	.about-me__table {
+		padding-top: 60px;
+		margin-bottom: 70px;
+	}
+	.about-me__photo-column {
+		width: 292px;
+		height: 352px;
+	}
+	.about-me__name {
+		margin-bottom: 20px;
+		font-size: 30px;
+		line-height: 36px;
+	}
+	.about-me__job {
+		font-size: 11px;
+		line-height: 16px;
+	}
+	.about-me__topic {
+		margin-bottom: 38px;
+		font-size: 11px;
+		line-height: 16px;
+	}
+	.about-me__link {
+		margin-right: 26px;
+	}
+}
