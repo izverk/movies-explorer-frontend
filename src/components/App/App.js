@@ -24,50 +24,96 @@ function App() {
     <div className='app'>
       <Switch>
 
-        <Route path='/signin'>
+        <Route exact path='/signin'>
           <Login />
         </Route>
 
-        <Route path='/signup'>
+        <Route exact path='/signup'>
           <Register />
         </Route>
 
-        <Route path='/'>
+        <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
+
+          <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+
           <Switch>
-
             <Route exact path='/'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <Main />
-              <Footer />
             </Route>
-
             <Route path='/movies'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <Movies isMoviesLoading={isMoviesLoading} />
-              <Footer />
             </Route>
-
             <Route path='/saved-movies'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
-              <Footer />
             </Route>
-
             <Route path='/profile'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
               <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
             </Route>
-
-            <Route path='*'>
-              <Page404 />
-            </Route>
           </Switch>
+
+          <Route exact path={['/', '/movies', '/saved-movies']}>
+            <Footer />
+          </Route>
+
+        </Route>
+
+        <Route path='*'>
+          <Page404 />
         </Route>
 
       </Switch>
       <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
     </div>
   );
+
+  // return (
+  //   <div className='app'>
+  //     <Switch>
+
+  //       <Route path='/signin'>
+  //         <Login />
+  //       </Route>
+
+  //       <Route path='/signup'>
+  //         <Register />
+  //       </Route>
+
+  //       <Route path='/'>
+  //         <Switch>
+
+  //           <Route exact path='/'>
+  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+  //             <Main />
+  //             <Footer />
+  //           </Route>
+
+  //           <Route path='/movies'>
+  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+  //             <Movies isMoviesLoading={isMoviesLoading} />
+  //             <Footer />
+  //           </Route>
+
+  //           <Route path='/saved-movies'>
+  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+  //             <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
+  //             <Footer />
+  //           </Route>
+
+  //           <Route path='/profile'>
+  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+  //             <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+  //           </Route>
+
+  //           <Route path='*'>
+  //             <Page404 />
+  //           </Route>
+  //         </Switch>
+  //       </Route>
+
+  //     </Switch>
+  //     <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
+  //   </div>
+  // );
 }
 
 export default App;
