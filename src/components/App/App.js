@@ -11,109 +11,68 @@ import Login from '../Login/Login'
 import Register from '../Register/Register'
 import Page404 from '../Page404/Page404'
 import ModalMenu from '../ModalMenu/ModalMenu';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function App() {
 
-  const [loggedIn, setLoggedIn] = useState(true);
+  // Стейт с данными текущего пользователя
+  const [currentUser, setCurrentUser] = useState({});
+
+  // Стейт авторизованности пользователя
+  const [loggedIn, setLoggedIn] = useState(false);
+
   const [isMoviesLoading] = useState(false);
   const [isSavedMoviesLoading] = useState(false);
   const [modalMenuState, setModalMenuState] = useState(false);
   const changeModalMenuState = () => { setModalMenuState(!modalMenuState) };
 
   return (
-    <div className='app'>
-      <Switch>
+    <CurrentUserContext.Provider value={currentUser}>
+      <div className='app'>
+        <Switch>
 
-        <Route exact path='/signin'>
-          <Login />
-        </Route>
-
-        <Route exact path='/signup'>
-          <Register />
-        </Route>
-
-        <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
-
-          <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-
-          <Switch>
-            <Route exact path='/'>
-              <Main />
-            </Route>
-            <Route path='/movies'>
-              <Movies isMoviesLoading={isMoviesLoading} />
-            </Route>
-            <Route path='/saved-movies'>
-              <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
-            </Route>
-            <Route path='/profile'>
-              <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            </Route>
-          </Switch>
-
-          <Route exact path={['/', '/movies', '/saved-movies']}>
-            <Footer />
+          <Route exact path='/signin'>
+            <Login />
           </Route>
 
-        </Route>
+          <Route exact path='/signup'>
+            <Register />
+          </Route>
 
-        <Route path='*'>
-          <Page404 />
-        </Route>
+          <Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
 
-      </Switch>
-      <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
-    </div>
+            <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
+
+            <Switch>
+              <Route exact path='/'>
+                <Main />
+              </Route>
+              <Route path='/movies'>
+                <Movies isMoviesLoading={isMoviesLoading} />
+              </Route>
+              <Route path='/saved-movies'>
+                <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
+              </Route>
+              <Route path='/profile'>
+                <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
+              </Route>
+            </Switch>
+
+            <Route exact path={['/', '/movies', '/saved-movies']}>
+              <Footer />
+            </Route>
+
+          </Route>
+
+          <Route path='*'>
+            <Page404 />
+          </Route>
+
+        </Switch>
+        <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
+      </div>
+    </CurrentUserContext.Provider>
   );
-
-  // return (
-  //   <div className='app'>
-  //     <Switch>
-
-  //       <Route path='/signin'>
-  //         <Login />
-  //       </Route>
-
-  //       <Route path='/signup'>
-  //         <Register />
-  //       </Route>
-
-  //       <Route path='/'>
-  //         <Switch>
-
-  //           <Route exact path='/'>
-  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-  //             <Main />
-  //             <Footer />
-  //           </Route>
-
-  //           <Route path='/movies'>
-  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-  //             <Movies isMoviesLoading={isMoviesLoading} />
-  //             <Footer />
-  //           </Route>
-
-  //           <Route path='/saved-movies'>
-  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-  //             <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
-  //             <Footer />
-  //           </Route>
-
-  //           <Route path='/profile'>
-  //             <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-  //             <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-  //           </Route>
-
-  //           <Route path='*'>
-  //             <Page404 />
-  //           </Route>
-  //         </Switch>
-  //       </Route>
-
-  //     </Switch>
-  //     <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
-  //   </div>
-  // );
 }
 
 export default App;
