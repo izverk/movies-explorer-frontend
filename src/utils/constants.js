@@ -1,3 +1,17 @@
+export const moviesApiConfig = {
+  baseUrl: 'https://api.nomoreparties.co/beatfilm-movies/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
+export const mainApiConfig = {
+  baseUrl: 'https://api.movies-explorer.izver.nomoredomains.work/',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+};
+
 export const movies = [
   { id: 1, nameRU: "33 слова о дизайне", duration: '1ч 47м', image: '../../images/pic__COLOR_pic(1).jpg', isLiked: true },
   { id: 2, nameRU: "Киноальманах «100 лет дизайна»", duration: '1ч 3м', image: '../../images/pic__COLOR_pic(2).jpg', isLiked: false },
