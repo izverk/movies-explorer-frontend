@@ -13,6 +13,10 @@ import Page404 from '../Page404/Page404';
 import ModalMenu from '../ModalMenu/ModalMenu';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import moviesApi from '../../utils/MoviesApi';
+import {
+	queryErrorMessageText,
+	nothingFoundMessageText,
+} from '../../utils/constants';
 
 function App() {
 	// Стейт с данными текущего пользователя
