@@ -1,17 +1,15 @@
 import React from 'react';
 import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
-import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({ isSavedMoviesLoading }) {
-
-    return (
-        <main className="saved-movies">
-            <SearchForm />
-            {isSavedMoviesLoading ? <Preloader /> : <MoviesCardList />}
-        </main>
-    );
+function SavedMovies({}) {
+	return (
+		<main className='saved-movies'>
+			<SearchForm />
+			<MoviesCardList />
+		</main>
+	);
 }
 
 export default SavedMovies;

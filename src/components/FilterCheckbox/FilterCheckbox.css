@@ -33,9 +33,9 @@
 	background-image: url(../../images/icon_tumbler-on.svg);
 }
 
-.filter__checkbox:disabled + .filter__pseudo-checkbox {
+/* .filter__checkbox:disabled + .filter__pseudo-checkbox {
 	background-image: url(../../images/icon_tumbler-disabled.svg);
-}
+} */
 
 @media screen and (max-width: 320px) {
 	.filter {

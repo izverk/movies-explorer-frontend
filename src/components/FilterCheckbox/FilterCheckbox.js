@@ -1,16 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FilterCheckbox.css';
 
-function FilterCheckbox() {
-  const [disabled] = useState(false);
+function FilterCheckbox({
+	moviesSearchCheckboxState,
+	setMoviesSearchCheckboxState,
+}) {
+	const handleInputChange = (e) => {
+		setMoviesSearchCheckboxState(e.target.checked);
+	};
 
-  return (
-    <label className='filter'>
-      <input className='filter__checkbox' type='checkbox' disabled={disabled ? true : false} />
-      <span className='filter__pseudo-checkbox' />
-      Короткометражки
-    </label>
-  );
+	return (
+		<label className='filter'>
+			<input
+				type='checkbox'
+				checked={moviesSearchCheckboxState}
+				className='filter__checkbox'
+				name='filterCheckbox'
+				onChange={handleInputChange}
+			/>
+			<span className='filter__pseudo-checkbox' />
+			Короткометражки
+		</label>
+	);
 }
 
 export default FilterCheckbox;
