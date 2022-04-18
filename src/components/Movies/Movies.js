@@ -3,6 +3,9 @@ import './Movies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import SearchResults from '../SearchResults/SearchResults';
+
+import { nothingFoundMessageText } from '../../utils/constants';
 
 function Movies({
 	movies,
@@ -13,6 +16,8 @@ function Movies({
 	setMoviesSearchInputText,
 	moviesSearchCheckboxState,
 	setMoviesSearchCheckboxState,
+	badSearchResult,
+	setBadSearchResult,
 }) {
 	return (
 		<main className='movies'>
@@ -23,13 +28,16 @@ function Movies({
 				moviesSearchCheckboxState={moviesSearchCheckboxState}
 				setMoviesSearchCheckboxState={setMoviesSearchCheckboxState}
 				setIsPreloaderVisible={setIsPreloaderVisible}
+				badSearchResult
+				setBadSearchResult={setBadSearchResult}
 			/>
-			{movies &&
-				(isPreloaderVisible ? (
-					<Preloader />
-				) : (
-					<MoviesCardList movies={movies} />
-				))}
+			{isPreloaderVisible ? (
+				<Preloader />
+			) : badSearchResult ? (
+				<SearchResults badSearchResult={badSearchResult} />
+			) : movies ? (
+				<MoviesCardList movies={movies} />
+			) : null}
 		</main>
 	);
 }

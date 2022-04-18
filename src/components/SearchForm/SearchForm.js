@@ -1,6 +1,7 @@
 import React from 'react';
 import './SearchForm.css';
 import FilterCheckbox from '../FilterCheckbox/FilterCheckbox';
+import { needKeyWordMessageText } from '../../utils/constants';
 
 function SearchForm({
 	getAndFilterMovies,
@@ -9,10 +10,17 @@ function SearchForm({
 	moviesSearchCheckboxState,
 	setMoviesSearchCheckboxState,
 	setIsPreloaderVisible,
+	setBadSearchResult,
 }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		setIsPreloaderVisible(() => true);
+		// проверка наличия данных в инпуте поиска фильмов
+		if (!moviesSearchInputText) {
+			setBadSearchResult(needKeyWordMessageText);
+			return;
+		}
+		setBadSearchResult(null);
+		setIsPreloaderVisible(true);
 		getAndFilterMovies();
 	};
 
@@ -34,7 +42,6 @@ function SearchForm({
 						name='movie'
 						id='movie-input'
 						placeholder='Фильм'
-						required
 						onChange={handleInputChange}
 						value={moviesSearchInputText || ''}
 					/>

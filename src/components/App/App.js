@@ -25,7 +25,7 @@ function App() {
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
 
-	// Стейт, отражающий необходимость отрисовки прелоадера в момент загрузки фильмов
+	// Стейт для отрисовки прелоадера в момент загрузки фильмов
 	const [isPreloaderVisible, setIsPreloaderVisible] = useState(false);
 
 	// Стейт модального меню навигации
@@ -34,10 +34,10 @@ function App() {
 		setModalMenuState((modalMenuState) => !modalMenuState);
 	};
 
-	// ===================== ЛОГИКА ПОЛУЧЕНИЯ/СОХРАНЕНИЯ/ФИЛЬТРАЦИИ ФИЛЬМОВ =====================
+	// ================== ЛОГИКА ПОЛУЧЕНИЯ/СОХРАНЕНИЯ/ФИЛЬТРАЦИИ ФИЛЬМОВ====================
 
 	// Стейт с массивом фильмов для отрисовки
-	const [movies, setMovies] = React.useState([]);
+	const [movies, setMovies] = React.useState(null);
 
 	// Стейт со значением инпута поиска фильмов
 	const [moviesSearchInputText, setMoviesSearchInputText] = React.useState('');
@@ -45,6 +45,16 @@ function App() {
 	// Стейт со значением чек-бокса фильтра короткометражек
 	const [moviesSearchCheckboxState, setMoviesSearchCheckboxState] =
 		React.useState(false);
+
+	// Стейт вывода в модальном окне ResultInfoModal результатов различных действий пользователя
+	const [infoModal, setInfoModal] = React.useState({
+		isModalOpen: false,
+		isSucces: false,
+		message: 'Начальное тестовое сообщение!',
+	});
+
+	// Стейт сообщения с результатом поиска фильмов
+	const [badSearchResult, setBadSearchResult] = React.useState('');
 
 	// Достаём из локального хранилища ранее сохраненные параметры и результаты поиска фильмов (при наличии)
 	React.useEffect(() => {
@@ -64,17 +74,17 @@ function App() {
 		}
 	}, []);
 
-	// для отладки
-	React.useEffect(() => {
-		console.log(
-			'🚀 ~ file: App.js ~ line 68 ~ React.useEffect ~ movies',
-			movies
-		);
-		console.log(
-			'🚀 ~ file: App.js ~ line 45 ~ App ~ moviesSearchCheckboxState',
-			moviesSearchCheckboxState
-		);
-	});
+	// // для отладки
+	// React.useEffect(() => {
+	// 	console.log(
+	// 		'🚀 ~ file: App.js ~ line 68 ~ React.useEffect ~ movies',
+	// 		movies
+	// 	);
+	// 	console.log(
+	// 		'🚀 ~ file: App.js ~ line 45 ~ App ~ moviesSearchCheckboxState',
+	// 		moviesSearchCheckboxState
+	// 	);
+	// });
 
 	// Функция получения и фильтрации фильмов по нажатию кнопки поиска в SearchForm
 	const getAndFilterMovies = () => {
@@ -83,20 +93,34 @@ function App() {
 			.then((movies) => {
 				// Фильтрация полученного массива фильмов в соответствии с параметрами формы поиска
 
-				// Сохранение параметров и результатов поиска в локальном хранилище
+				// Сохранение параметров и результатов поиска в локальном хранилище при удачном поиске
+
 				localStorage.setItem('movies', JSON.stringify(movies));
 				localStorage.setItem(
 					'moviesSearchCheckboxState',
 					JSON.stringify(moviesSearchCheckboxState)
 				);
 				localStorage.setItem('moviesSearchInputText', moviesSearchInputText);
+
+				// Cохраняем отфильтрованные фильмы в стейт-переменную
+				// setMovies(movies);
+
 				// Убираем прелоадер
 				setIsPreloaderVisible(false);
-				// Cохраняем отфильтрованные фильмы в стейт-переменную
-				setMovies(movies);
+				// Cитуация, когда ничего не найдено
+				setBadSearchResult(() => nothingFoundMessageText);
 			})
 			.catch((err) => {
 				console.log(err);
+				// setInfoModal({
+				// 	isModalOpen: true,
+				// 	isSucces: false,
+				// 	message: queryErrorMessage,
+				// });
+				// Убираем прелоадер
+				setIsPreloaderVisible(false);
+				// Ситуация, когда в процессе получения и обработки данных происходит ошибка
+				setBadSearchResult(() => queryErrorMessageText);
 			});
 	};
 
@@ -132,6 +156,8 @@ function App() {
 									moviesSearchCheckboxState={moviesSearchCheckboxState}
 									setMoviesSearchCheckboxState={setMoviesSearchCheckboxState}
 									getAndFilterMovies={getAndFilterMovies}
+									badSearchResult={badSearchResult}
+									setBadSearchResult={setBadSearchResult}
 								/>
 							</Route>
 							<Route path='/saved-movies'>
