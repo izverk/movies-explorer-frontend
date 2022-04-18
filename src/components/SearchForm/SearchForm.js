@@ -5,17 +5,17 @@ import { needKeyWordMessageText } from '../../utils/constants';
 
 function SearchForm({
 	getAndFilterMovies,
-	moviesSearchInputText,
-	setMoviesSearchInputText,
-	moviesSearchCheckboxState,
-	setMoviesSearchCheckboxState,
+	moviesInputValue,
+	setMoviesInputValue,
+	shortFilmsCheckboxValue,
+	setShortFilmsCheckboxValue,
 	setIsPreloaderVisible,
 	setBadSearchResult,
 }) {
 	const handleSubmit = (e) => {
 		e.preventDefault();
 		// проверка наличия данных в инпуте поиска фильмов
-		if (!moviesSearchInputText) {
+		if (!moviesInputValue) {
 			setBadSearchResult(needKeyWordMessageText);
 			return;
 		}
@@ -25,7 +25,7 @@ function SearchForm({
 	};
 
 	const handleInputChange = (e) => {
-		setMoviesSearchInputText(e.target.value);
+		setMoviesInputValue(e.target.value);
 	};
 
 	return (
@@ -43,7 +43,7 @@ function SearchForm({
 						id='movie-input'
 						placeholder='Фильм'
 						onChange={handleInputChange}
-						value={moviesSearchInputText || ''}
+						value={moviesInputValue || ''}
 					/>
 					<button
 						className='app__link app__button search-form__button'
@@ -51,8 +51,8 @@ function SearchForm({
 					/>
 				</div>
 				<FilterCheckbox
-					moviesSearchCheckboxState={moviesSearchCheckboxState}
-					setMoviesSearchCheckboxState={setMoviesSearchCheckboxState}
+					shortFilmsCheckboxValue={shortFilmsCheckboxValue}
+					setShortFilmsCheckboxValue={setShortFilmsCheckboxValue}
 				/>
 			</div>
 		</form>

@@ -2,18 +2,18 @@ import React from 'react';
 import './FilterCheckbox.css';
 
 function FilterCheckbox({
-	moviesSearchCheckboxState,
-	setMoviesSearchCheckboxState,
+	shortFilmsCheckboxValue,
+	setShortFilmsCheckboxValue,
 }) {
 	const handleInputChange = (e) => {
-		setMoviesSearchCheckboxState(e.target.checked);
+		setShortFilmsCheckboxValue(e.target.checked);
 	};
 
 	return (
 		<label className='filter'>
 			<input
 				type='checkbox'
-				checked={moviesSearchCheckboxState}
+				checked={shortFilmsCheckboxValue}
 				className='filter__checkbox'
 				name='filterCheckbox'
 				onChange={handleInputChange}

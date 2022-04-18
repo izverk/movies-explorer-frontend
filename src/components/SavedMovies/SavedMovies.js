@@ -3,11 +3,11 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies({}) {
+function SavedMovies({ savedMovies }) {
 	return (
 		<main className='saved-movies'>
 			<SearchForm />
-			<MoviesCardList />
+			<MoviesCardList movies={savedMovies} />
 		</main>
 	);
 }

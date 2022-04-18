@@ -5,17 +5,15 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchResults from '../SearchResults/SearchResults';
 
-import { nothingFoundMessageText } from '../../utils/constants';
-
 function Movies({
 	movies,
 	isPreloaderVisible,
 	setIsPreloaderVisible,
 	getAndFilterMovies,
-	moviesSearchInputText,
-	setMoviesSearchInputText,
-	moviesSearchCheckboxState,
-	setMoviesSearchCheckboxState,
+	moviesInputValue,
+	setMoviesInputValue,
+	shortFilmsCheckboxValue,
+	setShortFilmsCheckboxValue,
 	badSearchResult,
 	setBadSearchResult,
 }) {
@@ -23,10 +21,10 @@ function Movies({
 		<main className='movies'>
 			<SearchForm
 				getAndFilterMovies={getAndFilterMovies}
-				moviesSearchInputText={moviesSearchInputText}
-				setMoviesSearchInputText={setMoviesSearchInputText}
-				moviesSearchCheckboxState={moviesSearchCheckboxState}
-				setMoviesSearchCheckboxState={setMoviesSearchCheckboxState}
+				moviesInputValue={moviesInputValue}
+				setMoviesInputValue={setMoviesInputValue}
+				shortFilmsCheckboxValue={shortFilmsCheckboxValue}
+				setShortFilmsCheckboxValue={setShortFilmsCheckboxValue}
 				setIsPreloaderVisible={setIsPreloaderVisible}
 				badSearchResult
 				setBadSearchResult={setBadSearchResult}

@@ -12,8 +12,8 @@ function MoviesCard({ movie }) {
 				<div className='movies-card__poster-wrapper'>
 					<img
 						className='movies-card__poster-photo'
-						src={moviePoster}
-						alt='Постер фильма'
+						src={movie.image.url}
+						alt={`Постер к фильму ${movie.nameRU}`}
 					/>
 				</div>
 			</div>
