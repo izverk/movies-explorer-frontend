@@ -23,12 +23,14 @@ function App() {
 	// Стейт с данными текущего пользователя
 	const [currentUser, setCurrentUser] = useState({});
 	// Стейт авторизованности пользователя
-	const [isLoggedIn, setIsLoggedIn] = useState(true);
+	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	// Стейт модального меню навигации
 	const [modalMenuState, setModalMenuState] = useState(false);
 	const changeModalMenuState = () => {
 		setModalMenuState((modalMenuState) => !modalMenuState);
 	};
+	// Стейт сообщения с ошибкой регистрации
+	const [regSubmitError, setRegSubmitError] = React.useState('');
 
 	// =========================== РАБОТА С ФИЛЬМАМИ. КОМПОНЕНТ Movies ==============================
 
@@ -117,7 +119,10 @@ function App() {
 					</Route>
 
 					<Route exact path='/signup'>
-						<Register />
+						<Register
+							regSubmitError={regSubmitError}
+							setRegSubmitError={setRegSubmitError}
+						/>
 					</Route>
 
 					<Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
