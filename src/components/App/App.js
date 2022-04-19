@@ -22,19 +22,17 @@ import {
 function App() {
 	// Стейт с данными текущего пользователя
 	const [currentUser, setCurrentUser] = useState({});
-
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = useState(true);
-
 	// Стейт модального меню навигации
 	const [modalMenuState, setModalMenuState] = useState(false);
 	const changeModalMenuState = () => {
 		setModalMenuState((modalMenuState) => !modalMenuState);
 	};
 
-	// ============================== РАБОТА С ФИЛЬМАМИ (компонент Movies) ==================================
+	// =========================== РАБОТА С ФИЛЬМАМИ. КОМПОНЕНТ Movies ==============================
 
-	// Стейт с массивом фильмов для отрисовки
+	// Стейт с массивом запрошенных фильмов
 	const [movies, setMovies] = React.useState(null);
 	// Стейт со значением инпута поиска фильмов
 	const [moviesInputValue, setMoviesInputValue] = React.useState('');
@@ -107,7 +105,7 @@ function App() {
 			});
 	};
 
-	// ====================== РАБОТА С СОХРАНЕННЫМИ ФИЛЬМАМИ (компонент SavedMovies) =======================
+	// ============================ РАБОТА С ФИЛЬМАМИ. КОМПОНЕНТ SavedMovies ============================
 	const [savedMovies, setSavedMovies] = React.useState(null);
 
 	return (

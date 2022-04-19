@@ -7,6 +7,7 @@ import SearchResults from '../SearchResults/SearchResults';
 
 function Movies({
 	movies,
+
 	isPreloaderVisible,
 	setIsPreloaderVisible,
 	getAndFilterMovies,

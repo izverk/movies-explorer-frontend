@@ -1,21 +1,88 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList({ movies }) {
-	const [isMoreButtonVisible] = useState(true);
+	// Стейт кнопки "Ещё"
+	const [isMoreButtonVisible, setIsMoreButtonVisible] = React.useState(true);
+	// Стейт количества карточек для отрисовки
+	const [renderedCardsAmount, setRenderedCardsAmount] = React.useState(0);
+	console.log('MoviesCardList.js ~ renderedCardsAmount', renderedCardsAmount);
+	// Стейт количества добавляемых карточек фильмов кнопкой "Ещё"
+	const [addedCardsAmount, setAddedCardsAmount] = React.useState(0);
+	console.log('MoviesCardList.js ~ addedCardsAmount', addedCardsAmount);
+	// Стейт с готовым для отрисовки массивом карточек
+	const [renderedCards, setRenderedCards] = React.useState([]);
+	console.log('MoviesCardList.js ~ renderedCards', renderedCards);
+
+	// Функция определения количества отображаемых
+	// и добавляемых кнопкой "Eщё" карточек в зависимости от ширины окна
+	const changeCardsAmount = () => {
+		if (document.documentElement.clientWidth > 997) {
+			setRenderedCardsAmount(12);
+			setAddedCardsAmount(3);
+		} else if (document.documentElement.clientWidth > 639) {
+			setRenderedCardsAmount(8);
+			setAddedCardsAmount(2);
+		} else {
+			setRenderedCardsAmount(5);
+			setAddedCardsAmount(1);
+		}
+	};
+	// Определяем первоначальное количество карточек для текущей ширины окна
+	// (отображаемых и подгружаемых при нажатии на кнопку "Ещё")
+	React.useEffect(() => {
+		changeCardsAmount();
+	}, []);
+
+	// Определяем первоначальный массив карточек для текущей ширины окна
+	React.useEffect(() => {
+		setRenderedCards(movies.slice(0, renderedCardsAmount));
+	}, [movies, renderedCardsAmount]);
+
+	// Запускаем слушатель текущей ширины окна
+	React.useEffect(() => {
+		const handleScreenResize = (e) => {
+			setTimeout(changeCardsAmount, 2000);
+		};
+		window.addEventListener('resize', handleScreenResize);
+		return () => {
+			window.removeEventListener('resize', handleScreenResize);
+		};
+	}, []);
+	// Определяем видимость кнопки "Ещё" в зависимости от длины отображаемого массива
+	React.useEffect(() => {
+		if (renderedCards.length === movies.length) {
+			setIsMoreButtonVisible(false);
+		} else {
+			setIsMoreButtonVisible(true);
+		}
+	}, [renderedCards, movies]);
+
+	// Обработчик нажатия кнопки "Ещё"
+	const handleMoreButtonClick = () => {
+		setRenderedCards(
+			renderedCards.concat(
+				movies.slice(
+					renderedCards.length,
+					renderedCards.length + addedCardsAmount
+				)
+			)
+		);
+	};
 
 	return (
 		<div className='movies-card-list'>
 			<ul className='movies-card-list__list'>
-				{movies.map((movie) => {
+				{renderedCards.map((movie) => {
 					return <MoviesCard key={movie.id} movie={movie} />;
 				})}
 			</ul>
 			{isMoreButtonVisible && (
 				<button
 					className='app__link app__button movies-card-list__more-button'
-					type='button'>
+					type='button'
+					onClick={handleMoreButtonClick}>
 					Ещё
 				</button>
 			)}
