@@ -40,7 +40,6 @@ function Register({ registerUser, formSubmitError, setFormSubmitError }) {
 				labelText='Имя'
 				type='text'
 				name='nameInput'
-				id='nameInput'
 				minLength={2}
 				maxLength={40}
 				required={true}
@@ -52,7 +51,6 @@ function Register({ registerUser, formSubmitError, setFormSubmitError }) {
 				labelText='E-mail'
 				type='email'
 				name='emailInput'
-				id='emailInput'
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}
@@ -62,7 +60,6 @@ function Register({ registerUser, formSubmitError, setFormSubmitError }) {
 				labelText='Пароль'
 				type='password'
 				name='passwordInput'
-				id='passwordInput'
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}

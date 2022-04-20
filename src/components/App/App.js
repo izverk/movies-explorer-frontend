@@ -34,16 +34,10 @@ function App() {
 
 	// Стейт с данными текущего пользователя
 	const [currentUser, setCurrentUser] = React.useState({});
-	console.log('🚀 ~ file: App.js ~ line 38 ~ App ~ currentUser', currentUser);
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-	console.log('🚀 ~ file: App.js ~ line 40 ~ App ~ isLoggedIn', isLoggedIn);
 	// Стейт сообщения с ошибкой отправки формы ввода данных
 	const [formSubmitError, setFormSubmitError] = React.useState('');
-	console.log(
-		'🚀 ~ file: App.js ~ line 44 ~ App ~ formSubmitError',
-		formSubmitError
-	);
 
 	// Функция регистрации пользователя
 	function registerUser({ name, email, password }) {
@@ -190,7 +184,29 @@ function App() {
 	const [savedMovies, setSavedMovies] = React.useState(null);
 
 	return (
-		<CurrentUserContext.Provider value={currentUser}>
+		<CurrentUserContext.Provider
+			value={{
+				modalMenuState,
+				setModalMenuState,
+				currentUser,
+				setCurrentUser,
+				isLoggedIn,
+				setIsLoggedIn,
+				formSubmitError,
+				setFormSubmitError,
+				movies,
+				setMovies,
+				moviesInputValue,
+				setMoviesInputValue,
+				shortFilmsCheckboxValue,
+				setShortFilmsCheckboxValue,
+				isPreloaderVisible,
+				setIsPreloaderVisible,
+				badSearchResult,
+				setBadSearchResult,
+				savedMovies,
+				setSavedMovies,
+			}}>
 			<div className='app'>
 				<Switch>
 					<Route exact path='/signin'>
@@ -272,8 +288,8 @@ function App() {
 										<Redirect to='/' />
 									) : (
 										<Profile
-											isLoggedIn={isLoggedIn}
-											setIsLoggedIn={setIsLoggedIn}
+										// isLoggedIn={isLoggedIn}
+										// setIsLoggedIn={setIsLoggedIn}
 										/>
 									)
 								}

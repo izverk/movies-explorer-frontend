@@ -14,9 +14,9 @@ class MainApi {
 		}
 	}
 
-	// Регистрация (создание) пользователя
+	// Регистрация (создание) пользователя (в ответе должны быть name, email, _id)
 	register(name, email, password) {
-		return fetch(`${this._baseUrl}api/signup`, {
+		return fetch(`${this._baseUrl}signup`, {
 			method: 'POST',
 			headers: this._headers,
 			body: JSON.stringify({
@@ -27,9 +27,9 @@ class MainApi {
 		}).then(this._checkResponse);
 	}
 
-	// Авторизация пользователя
+	// Авторизация пользователя (в ответе должен быть токен)
 	login(email, password) {
-		return fetch(`${this._baseUrl}api/signin`, {
+		return fetch(`${this._baseUrl}signin`, {
 			method: 'POST',
 			headers: this._headers,
 			body: JSON.stringify({ password, email }),
@@ -40,19 +40,31 @@ class MainApi {
 	setTokenHeaders(token) {
 		this._headers = {
 			...this._headers,
-			// Authorization: token,
 			Authorization: `Bearer ${token}`,
+			// Authorization: token, --- без Bearer лучше не делать, т.к. браузер всё равно его подставляет, лучше пусть будет единая логика (на фронте добавили Bearer, на бэке - убрали), + так было в тренажере
 		};
 	}
 
-	// Проверка токена
+	// Проверка токена (получение данных текущего пользователя, (в ответе должны быть name, email, _id))
 	checkToken(token) {
-		return fetch(`${this._baseUrl}api/users/me`, {
+		return fetch(`${this._baseUrl}users/me`, {
 			method: 'GET',
 			headers: {
 				...this._headers,
 				Authorization: `Bearer ${token}`,
 			},
+		}).then(this._checkResponse);
+	}
+
+	// Редактирование профиля пользователя (в ответе должны быть name, email, _id)
+	editProfile({ name, email }) {
+		return fetch(`${this._baseUrl}users/me`, {
+			method: 'PATCH',
+			headers: this._headers,
+			body: JSON.stringify({
+				name: name,
+				email: email,
+			}),
 		}).then(this._checkResponse);
 	}
 
@@ -63,17 +75,7 @@ class MainApi {
 	// 		headers: this._headers,
 	// 	}).then(this._checkResponse);
 	// }
-	// // Редактирование профиля пользователя
-	// setUserInfo({ userName, userDescription }) {
-	// 	return fetch(`${this._baseUrl}users/me`, {
-	// 		method: 'PATCH',
-	// 		headers: this._headers,
-	// 		body: JSON.stringify({
-	// 			name: userName,
-	// 			about: userDescription,
-	// 		}),
-	// 	}).then(this._checkResponse);
-	// }
+
 	// // Обновление аватара
 	// setUserAvatar({ avatarUrl }) {
 	// 	return fetch(`${this._baseUrl}users/me/avatar`, {

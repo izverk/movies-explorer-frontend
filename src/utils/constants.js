@@ -8,9 +8,9 @@ export const moviesApiConfig = {
 
 // Конфиг API основного сервера приложения
 export const mainApiConfig = {
-	baseUrl: 'http://localhost:3001/',
+	baseUrl: 'http://localhost:3001/api/',
 	// baseUrl:
-	// 		'https://api.movies-explorer.izver.nomoredomains.work/https://api.movies-explorer.izver.nomoredomains.work/api/',
+	// 'https://api.movies-explorer.izver.nomoredomains.work/api/,
 	headers: {
 		'Content-Type': 'application/json',
 	},
@@ -23,5 +23,6 @@ export const moviesApiURL = 'https://api.nomoreparties.co';
 export const queryErrorMessageText =
 	'Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз';
 export const formSubmitErrorText = 'Что-то пошло не так! Попробуйте ещё раз.';
+export const formSubmitSuccesText = 'Данные успешно отправлены!';
 export const nothingFoundMessageText = 'Ничего не найдено';
 export const needKeyWordMessageText = 'Нужно ввести ключевое слово';
