@@ -9,7 +9,7 @@ function Logo() {
 				className='logo'
 				src={logo}
 				alt='Логотип сайта'
-				title='Переход на страницу "О проекте"'
+				title='На главную страницу'
 			/>
 		</Link>
 	);

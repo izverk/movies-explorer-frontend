@@ -11,15 +11,10 @@ function AuthForm({
 	linkText,
 	linkPath,
 	isValid,
-	regSubmitError,
-	setRegSubmitError,
+	formSubmitError,
+	setFormSubmitError,
+	handleSubmit,
 }) {
-	const handleSubmit = (e) => {
-		e.preventDefault();
-		setRegSubmitError(null);
-		// registerUser();
-	};
-
 	return (
 		<form className='auth-form' name='auth-form' noValidate>
 			<Logo />
@@ -28,9 +23,9 @@ function AuthForm({
 				{children}
 				<span
 					className={`auth-form__submit-error${
-						regSubmitError ? ' auth-form__submit-error_active' : ''
+						formSubmitError ? ' auth-form__submit-error_active' : ''
 					}`}>
-					{regSubmitError}
+					{formSubmitError}
 				</span>
 			</div>
 			<div className='auth-form__buttons-container'>

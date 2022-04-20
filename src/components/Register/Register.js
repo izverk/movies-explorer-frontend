@@ -4,7 +4,7 @@ import AuthForm from '../AuthForm/AuthForm';
 import Input from '../Input/Input';
 import { useFormValidation } from '../../utils/utils';
 
-function Register({ regSubmitError, setRegSubmitError }) {
+function Register({ registerUser, formSubmitError, setFormSubmitError }) {
 	// Набор переменных и функций для валидации формы ввода
 	const { values, errors, isValid, handleValuesChange, resetValidation } =
 		useFormValidation();
@@ -14,6 +14,17 @@ function Register({ regSubmitError, setRegSubmitError }) {
 		resetValidation({});
 	}, [resetValidation]);
 
+	// Обработчик отправки формы
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		setFormSubmitError(null);
+		registerUser({
+			name: values.nameInput,
+			email: values.emailInput,
+			password: values.passwordInput,
+		});
+	};
+
 	return (
 		<AuthForm
 			title='Добро пожаловать!'
@@ -22,13 +33,16 @@ function Register({ regSubmitError, setRegSubmitError }) {
 			linkText='Войти'
 			linkPath='/signin'
 			isValid={isValid}
-			regSubmitError={regSubmitError}
-			setRegSubmitError={setRegSubmitError}>
+			formSubmitError={formSubmitError}
+			setFormSubmitError={setFormSubmitError}
+			handleSubmit={handleSubmit}>
 			<Input
 				labelText='Имя'
 				type='text'
-				name='name-input'
-				id='name-input'
+				name='nameInput'
+				id='nameInput'
+				minLength={2}
+				maxLength={40}
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}
@@ -37,8 +51,8 @@ function Register({ regSubmitError, setRegSubmitError }) {
 			<Input
 				labelText='E-mail'
 				type='email'
-				name='email-input'
-				id='email-input'
+				name='emailInput'
+				id='emailInput'
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}
@@ -47,8 +61,8 @@ function Register({ regSubmitError, setRegSubmitError }) {
 			<Input
 				labelText='Пароль'
 				type='password'
-				name='password-input'
-				id='password-input'
+				name='passwordInput'
+				id='passwordInput'
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}
