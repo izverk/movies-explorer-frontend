@@ -7,13 +7,10 @@ function MoviesCardList({ movies }) {
 	const [isMoreButtonVisible, setIsMoreButtonVisible] = React.useState(true);
 	// Стейт количества карточек для отрисовки
 	const [renderedCardsAmount, setRenderedCardsAmount] = React.useState(0);
-	console.log('MoviesCardList.js ~ renderedCardsAmount', renderedCardsAmount);
 	// Стейт количества добавляемых карточек фильмов кнопкой "Ещё"
 	const [addedCardsAmount, setAddedCardsAmount] = React.useState(0);
-	console.log('MoviesCardList.js ~ addedCardsAmount', addedCardsAmount);
 	// Стейт с готовым для отрисовки массивом карточек
 	const [renderedCards, setRenderedCards] = React.useState([]);
-	console.log('MoviesCardList.js ~ renderedCards', renderedCards);
 
 	// Функция определения количества отображаемых
 	// и добавляемых кнопкой "Eщё" карточек в зависимости от ширины окна

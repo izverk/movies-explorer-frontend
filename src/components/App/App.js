@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
 import Main from '../Main/Main';
@@ -11,9 +11,9 @@ import Login from '../Login/Login';
 import Register from '../Register/Register';
 import Page404 from '../Page404/Page404';
 import ModalMenu from '../ModalMenu/ModalMenu';
-import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import { handleMovies } from '../../utils/utils';
 import {
 	queryErrorMessageText,
@@ -34,10 +34,16 @@ function App() {
 
 	// Стейт с данными текущего пользователя
 	const [currentUser, setCurrentUser] = React.useState({});
+	console.log('🚀 ~ file: App.js ~ line 38 ~ App ~ currentUser', currentUser);
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+	console.log('🚀 ~ file: App.js ~ line 40 ~ App ~ isLoggedIn', isLoggedIn);
 	// Стейт сообщения с ошибкой отправки формы ввода данных
 	const [formSubmitError, setFormSubmitError] = React.useState('');
+	console.log(
+		'🚀 ~ file: App.js ~ line 44 ~ App ~ formSubmitError',
+		formSubmitError
+	);
 
 	// Функция регистрации пользователя
 	function registerUser({ name, email, password }) {
@@ -76,17 +82,17 @@ function App() {
 	// Функция проверки наличия токена и запуска загрузки контента текущего пользователя (ранее сохраненных данных поиска фильмов)
 	const checkTokenAndLoadContent = React.useCallback(() => {
 		const token = localStorage.getItem('token');
-		console.log(
-			'🚀 ~ file: App.js ~ line 84 ~ checkTokenAndLoadContent ~ token',
-			token
-		);
-
 		if (token) {
 			mainApi
 				.checkToken(token)
 				.then((userData) => {
-					setCurrentUser((prevState) => {
-						return { ...prevState, _id: userData._id, email: userData.email };
+					// setCurrentUser((prevState) => {
+					// 	return { ...prevState, _id: userData._id, email: userData.email };
+					// });
+					setCurrentUser({
+						name: userData.name,
+						_id: userData._id,
+						email: userData.email,
 					});
 					setIsLoggedIn(true);
 					mainApi.setTokenHeaders(token);
@@ -99,11 +105,12 @@ function App() {
 		}
 	}, [history]);
 
-	// // Один раз при монтировании корневого компонента проверяем наличие токена в хранилще и загружаем контент текущего пользователя
-	// React.useEffect(() => {
-	// 	checkTokenAndLoadContent();
-	// }, [checkTokenAndLoadContent]);
+	// Проверяем наличие токена в хранилще и загружаем контент текущего пользователя
+	React.useEffect(() => {
+		checkTokenAndLoadContent();
+	}, [checkTokenAndLoadContent]);
 
+	// Функция загрузки контента текущего пользователя (ранее сохраненных данных поиска фильмов)
 	function getCurrentUserContent() {
 		const savedMovies = JSON.parse(localStorage.getItem('movies'));
 		const savedSearchText = localStorage.getItem('moviesInputValue');
@@ -121,7 +128,7 @@ function App() {
 		}
 	}
 
-	// =========================== РАБОТА С ФИЛЬМАМИ. КОМПОНЕНТ Movies ==============================
+	// =================== ПОИСК ФИЛЬМОВ в стороннем сервисе ===================
 
 	// Стейт с массивом запрошенных фильмов
 	const [movies, setMovies] = React.useState(null);
@@ -165,7 +172,7 @@ function App() {
 					localStorage.setItem('moviesInputValue', moviesInputValue);
 				} else {
 					// если ничего не найдено просто выводим сообщение, ничего не сохраняя
-					setBadSearchResult(() => nothingFoundMessageText);
+					setBadSearchResult(nothingFoundMessageText);
 				}
 			})
 			.catch((err) => {
@@ -173,11 +180,13 @@ function App() {
 				// убираем прелоадер
 				setIsPreloaderVisible(false);
 				// выводим ошибку получения/обработки данных
-				setBadSearchResult(() => queryErrorMessageText);
+				setBadSearchResult(queryErrorMessageText);
 			});
 	};
 
-	// ============================ РАБОТА С ФИЛЬМАМИ. КОМПОНЕНТ SavedMovies ============================
+	// ================ СОХРАНЕННЫЕ ФИЛЬМЫ ПОЛЬЗОВАТЕЛЯ ============================
+
+	// Стейт с массивом сохраненных фильмов
 	const [savedMovies, setSavedMovies] = React.useState(null);
 
 	return (
@@ -185,19 +194,33 @@ function App() {
 			<div className='app'>
 				<Switch>
 					<Route exact path='/signin'>
-						<Login
-							loginUser={loginUser}
-							formSubmitError={formSubmitError}
-							setFormSubmitError={setFormSubmitError}
-						/>
+						{/* защита от возврата на экран авторизации */}
+						{() =>
+							isLoggedIn ? (
+								<Redirect to='/movies' />
+							) : (
+								<Login
+									loginUser={loginUser}
+									formSubmitError={formSubmitError}
+									setFormSubmitError={setFormSubmitError}
+								/>
+							)
+						}
 					</Route>
 
 					<Route exact path='/signup'>
-						<Register
-							registerUser={registerUser}
-							formSubmitError={formSubmitError}
-							setFormSubmitError={setFormSubmitError}
-						/>
+						{/* защита от возврата на экран регистрации */}
+						{() =>
+							isLoggedIn ? (
+								<Redirect to='/movies' />
+							) : (
+								<Register
+									registerUser={registerUser}
+									formSubmitError={formSubmitError}
+									setFormSubmitError={setFormSubmitError}
+								/>
+							)
+						}
 					</Route>
 
 					<Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
@@ -210,28 +233,50 @@ function App() {
 							<Route exact path='/'>
 								<Main />
 							</Route>
+
 							<Route path='/movies'>
-								<Movies
-									movies={movies}
-									isPreloaderVisible={isPreloaderVisible}
-									setIsPreloaderVisible={setIsPreloaderVisible}
-									moviesInputValue={moviesInputValue}
-									setMoviesInputValue={setMoviesInputValue}
-									shortFilmsCheckboxValue={shortFilmsCheckboxValue}
-									setShortFilmsCheckboxValue={setShortFilmsCheckboxValue}
-									getAndFilterMovies={getAndFilterMovies}
-									badSearchResult={badSearchResult}
-									setBadSearchResult={setBadSearchResult}
-								/>
+								{/* защита маршрута */}
+								{() =>
+									!isLoggedIn ? (
+										<Redirect to='/' />
+									) : (
+										<Movies
+											movies={movies}
+											isPreloaderVisible={isPreloaderVisible}
+											setIsPreloaderVisible={setIsPreloaderVisible}
+											moviesInputValue={moviesInputValue}
+											setMoviesInputValue={setMoviesInputValue}
+											shortFilmsCheckboxValue={shortFilmsCheckboxValue}
+											setShortFilmsCheckboxValue={setShortFilmsCheckboxValue}
+											getAndFilterMovies={getAndFilterMovies}
+											badSearchResult={badSearchResult}
+											setBadSearchResult={setBadSearchResult}
+										/>
+									)
+								}
 							</Route>
 							<Route path='/saved-movies'>
-								<SavedMovies savedMovies={savedMovies} />
+								{/* защита маршрута */}
+								{() =>
+									!isLoggedIn ? (
+										<Redirect to='/' />
+									) : (
+										<SavedMovies savedMovies={savedMovies} />
+									)
+								}
 							</Route>
 							<Route path='/profile'>
-								<Profile
-									isLoggedIn={isLoggedIn}
-									setIsLoggedIn={setIsLoggedIn}
-								/>
+								{/* защита маршрута */}
+								{() =>
+									!isLoggedIn ? (
+										<Redirect to='/' />
+									) : (
+										<Profile
+											isLoggedIn={isLoggedIn}
+											setIsLoggedIn={setIsLoggedIn}
+										/>
+									)
+								}
 							</Route>
 						</Switch>
 
