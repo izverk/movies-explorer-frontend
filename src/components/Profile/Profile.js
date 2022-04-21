@@ -20,6 +20,7 @@ function Profile() {
 		setCurrentUser,
 		formSubmitError,
 		setFormSubmitError,
+		shortFilmsCheckboxValue,
 	} = context;
 
 	// Стейт сообщения пользователю об успешной отправке данных
@@ -27,7 +28,15 @@ function Profile() {
 
 	// Выход из профиля (меняем стейты, удаляем токен и редиректим на главную)
 	const handleProfileExit = (e) => {
-		localStorage.removeItem('token');
+		try {
+			localStorage.setItem(
+				'shortFilmsCheckboxValue',
+				JSON.stringify(shortFilmsCheckboxValue)
+			);
+			localStorage.removeItem('token');
+		} catch (err) {
+			console.log(err);
+		}
 		setIsLoggedIn(false);
 		setCurrentUser({});
 		history.push('/');

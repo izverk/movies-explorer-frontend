@@ -14,11 +14,7 @@ import ModalMenu from '../ModalMenu/ModalMenu';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-<<<<<<< HEAD
 import { filterWithKeyWord, handleUrlAndDuration } from '../../utils/utils';
-=======
-import { filterWithKeyWord, handleMoviesFields } from '../../utils/utils';
->>>>>>> b2384b9d64a9668cb1099cc6fef1a488c1ed2704
 import {
 	queryErrorMessageText,
 	nothingFoundMessageText,
@@ -84,9 +80,6 @@ function App() {
 			mainApi
 				.checkToken(token)
 				.then((userData) => {
-					// setCurrentUser((prevState) => {
-					// 	return { ...prevState, _id: userData._id, email: userData.email };
-					// });
 					setCurrentUser({
 						name: userData.name,
 						_id: userData._id,
@@ -129,7 +122,6 @@ function App() {
 	// =================== ЛОГИКА РАБОТЫ С КАРТОЧКАМИ ФИЛЬМОВ ===================
 
 	// Стейт с исходным массивом фильмов со стороннего сервиса
-<<<<<<< HEAD
 	const [initialMovies, setInitialMovies] = React.useState([]);
 	console.log(
 		'🚀 ~ file: App.js ~ line 129 ~ App ~ initialMovies',
@@ -143,17 +135,6 @@ function App() {
 	console.log('🚀 ~ file: App.js ~ line 133 ~ App ~ shortMovies', shortMovies);
 	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList
 	const [renderedMovies, setRenderedMovies] = React.useState([]);
-=======
-	const [initialMovies, setInitialMovies] = React.useState(null);
-	// Стейт с массивом фильмов, найденных по ключевому слову (и обработанных)
-	const [movies, setMovies] = React.useState(null);
-	console.log('🚀 ~ file: App.js ~ line 131 ~ App ~ movies', movies);
-	// Стейт с массивом фильмов, дополнительно отфильтрованных по длительности
-	const [shortMovies, setShortMovies] = React.useState(null);
-	console.log('🚀 ~ file: App.js ~ line 133 ~ App ~ shortMovies', shortMovies);
-	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList
-	const [renderedMovies, setRenderedMovies] = React.useState(movies);
->>>>>>> b2384b9d64a9668cb1099cc6fef1a488c1ed2704
 	console.log(
 		'🚀 ~ file: App.js ~ line 135 ~ App ~ renderedMovies',
 		renderedMovies
@@ -183,21 +164,9 @@ function App() {
 				// сохраняем в стейт исходный массив фильмов
 				setInitialMovies(initialMovies);
 				// фильтруем фильмы по ключевому слову
-<<<<<<< HEAD
 				const filteredMovies = filterWithKeyWord(
 					initialMovies,
 					moviesInputValue
-=======
-				const filteredWithKeyWord = filterWithKeyWord(
-					initialMovies,
-					moviesInputValue
-				);
-				// обрабатываем поля duration, image.url
-				const handledMovies = handleMoviesFields(filteredWithKeyWord);
-				console.log(
-					'🚀 ~ file: App.js ~ line 101 ~ .then ~ handledMovies',
-					handledMovies
->>>>>>> b2384b9d64a9668cb1099cc6fef1a488c1ed2704
 				);
 
 				// // обрабатываем поля duration, image.url
@@ -231,7 +200,6 @@ function App() {
 				setBadSearchResult(queryErrorMessageText);
 			});
 	};
-<<<<<<< HEAD
 	// Выбираем массив фильмов для отображения в зависимости от
 	// чек-бокса короткометражек, готовим его к отрисовке
 	// (обрабатываем поля image.url и duration) и сохраняем в стейт
@@ -243,16 +211,6 @@ function App() {
 			renderedFilms = movies;
 		}
 		setRenderedMovies(handleUrlAndDuration(renderedFilms));
-=======
-
-	// Выбираем массив фильмов для отображения в зависимости от чек-бокса короткометражек
-	React.useEffect(() => {
-		if (shortFilmsCheckboxValue) {
-			setRenderedMovies(shortMovies);
-		} else {
-			setRenderedMovies(movies);
-		}
->>>>>>> b2384b9d64a9668cb1099cc6fef1a488c1ed2704
 	}, [movies, shortMovies, shortFilmsCheckboxValue, setRenderedMovies]);
 
 	return (
