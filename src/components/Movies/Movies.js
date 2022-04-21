@@ -37,7 +37,11 @@ function Movies({
 				<Preloader />
 			) : badSearchResult ? (
 				<SearchResults badSearchResult={badSearchResult} />
+<<<<<<< HEAD
 			) : renderedMovies.length ? (
+=======
+			) : renderedMovies ? (
+>>>>>>> b2384b9d64a9668cb1099cc6fef1a488c1ed2704
 				<MoviesCardList movies={movies} />
 			) : null}
 		</main>
