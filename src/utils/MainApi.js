@@ -68,71 +68,30 @@ class MainApi {
 		}).then(this._checkResponse);
 	}
 
-	// // Получение профиля пользователя
-	// getUserInfo() {
-	// 	return fetch(`${this._baseUrl}users/me`, {
-	// 		method: 'GET',
-	// 		headers: this._headers,
-	// 	}).then(this._checkResponse);
-	// }
+	// Получение начального массива карточек
+	getCards() {
+		return fetch(`${this._baseUrl}movies`, {
+			method: 'GET',
+			headers: this._headers,
+		}).then(this._checkResponse);
+	}
 
-	// // Обновление аватара
-	// setUserAvatar({ avatarUrl }) {
-	// 	return fetch(`${this._baseUrl}users/me/avatar`, {
-	// 		method: 'PATCH',
-	// 		headers: this._headers,
-	// 		body: JSON.stringify({
-	// 			avatar: avatarUrl,
-	// 		}),
-	// 	}).then(this._checkResponse);
-	// }
-	// // Получение начального массива карточек
-	// getInitialCards() {
-	// 	return fetch(`${this._baseUrl}cards`, {
-	// 		method: 'GET',
-	// 		headers: this._headers,
-	// 	}).then(this._checkResponse);
-	// }
-	// // Запостить карточку
-	// postCard({ placeName, placeUrl }) {
-	// 	return fetch(`${this._baseUrl}cards`, {
-	// 		method: 'POST',
-	// 		headers: this._headers,
-	// 		body: JSON.stringify({
-	// 			name: placeName,
-	// 			link: placeUrl,
-	// 		}),
-	// 	}).then(this._checkResponse);
-	// }
-	// // Удаление карточки
-	// deleteCard(cardId) {
-	// 	return fetch(`${this._baseUrl}cards/${cardId}`, {
-	// 		method: 'DELETE',
-	// 		headers: this._headers,
-	// 	}).then(this._checkResponse);
-	// }
-	// // Постановка лайка карточки
-	// setLike(cardId) {
-	// 	return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-	// 		method: 'PUT',
-	// 		headers: this._headers,
-	// 	}).then(this._checkResponse);
-	// }
-	// // Удаление лайка карточки
-	// deleteLike(cardId) {
-	// 	return fetch(`${this._baseUrl}cards/${cardId}/likes`, {
-	// 		method: 'DELETE',
-	// 		headers: this._headers,
-	// 	}).then(this._checkResponse);
-	// }
-	// // Переключение лайка карточки
-	// changeLikeCardStatus(cardId, notLiked) {
-	// 	if (notLiked) {
-	// 		return this.setLike(cardId);
-	// 	} else {
-	// 		return this.deleteLike(cardId);
-	// 	}
-	// }
+	// Создание карточки
+	createCard(card) {
+		return fetch(`${this._baseUrl}movies`, {
+			method: 'POST',
+			headers: this._headers,
+			body: JSON.stringify(card),
+		}).then(this._checkResponse);
+	}
+
+	// Удаление карточки
+	deleteCard(cardId) {
+		return fetch(`${this._baseUrl}movies/${cardId}`, {
+			method: 'DELETE',
+			headers: this._headers,
+		}).then(this._checkResponse);
+	}
 }
 
 const mainApi = new MainApi(mainApiConfig);

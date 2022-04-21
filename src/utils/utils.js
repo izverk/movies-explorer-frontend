@@ -1,57 +1,41 @@
 import { useState, useEffect, useCallback } from 'react';
 import { moviesApiURL } from './constants';
 
-// Обработка и фильтрация массива фильмов с учетом ключевого слова и длительности
-export function handleMovies(movies, keyWord, isOnlyShortFilms) {
-	// оставляем только короткометражки (если задан соответствующий параметр (чекбокс))
-	if (isOnlyShortFilms) {
-		movies = filterWithDuration(movies);
-	}
-	console.log(
-		'🚀 ~ file: utils.js ~ line 9 ~ filterMoviesWithDuration ~ movies',
-		movies
-	);
-	// оставляем только фильмы с названиями, содержащими ключевое слово
-	movies = filterWithKeyWord(movies, keyWord);
-	console.log(
-		'🚀 ~ file: utils.js ~ line 13 ~ filterMoviesWithKeyWord ~ movies',
-		movies
-	);
-	// оставляем только нужные поля, преобразуем длительность в строку нужного формата, делаем абсолютные ссылки на изображения вместо относительных
-	movies = handleFields(movies);
-	console.log('🚀 ~ file: utils.js ~ line 16 ~ handleMovies ~ movies', movies);
-	// возвращаем обработанный массив
-	return movies;
-
-	// ВЫШЕИСПОЛЬЗОВАННЫЕ ФУНКЦИИ ФИЛЬТРАЦИИ И ОБРАБОТКИ МАССИВОВ
-	function filterWithDuration(movies) {
-		const durationLimit = 40;
-		return movies.filter((movie) => {
-			return movie.duration <= durationLimit;
-		});
-	}
-
-	function filterWithKeyWord(movies, keyWord) {
-		return movies.filter((movie) => {
-			return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
-		});
-	}
-
-	function handleFields(movies) {
-		return movies.map((movie) => {
-			const handledDuration =
-				Math.trunc(movie.duration / 60) + ' ч ' + (movie.duration % 60) + ' м';
-			const handledURL = moviesApiURL + movie.image.url;
-
-			return {
-				id: movie.id,
-				nameRU: movie.nameRU,
-				image: { url: handledURL },
-				trailerLink: movie.trailerLink,
-				duration: handledDuration,
-			};
-		});
-	}
+// Функция фильтрации фильмов по ключевому слову
+export function filterWithKeyWord(movies, keyWord) {
+	const filteredMovies = movies.filter((movie) => {
+		return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
+	});
+	// оставляем только нужные поля для отрисовки
+	return filteredMovies.map((item) => {
+		return {
+			id: item.id,
+			nameRU: item.nameRU,
+			image: { url: item.image.url },
+			trailerLink: item.trailerLink,
+			duration: item.duration,
+		};
+	});
+}
+// Функция фильтрации фильмов по длительности
+export function filterWithDuration(movies) {
+	const durationLimit = 40;
+	return movies.filter((movie) => {
+		return movie.duration <= durationLimit;
+	});
+}
+// Функция обработки полей объектов массива фильмов (обрабатываем duration, image.url)
+export function handleUrlAndDuration(movies) {
+	return movies.map((movie) => {
+		const handledDuration =
+			Math.trunc(movie.duration / 60) + ' ч ' + (movie.duration % 60) + ' м';
+		const handledURL = moviesApiURL + movie.image.url;
+		return {
+			...movie,
+			image: { url: handledURL },
+			duration: handledDuration,
+		};
+	});
 }
 
 // Закрытие попапов по нажатию Esc

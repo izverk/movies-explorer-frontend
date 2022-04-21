@@ -4,6 +4,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchResults from '../SearchResults/SearchResults';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
 function Movies({
 	movies,
@@ -17,6 +18,9 @@ function Movies({
 	badSearchResult,
 	setBadSearchResult,
 }) {
+	const context = React.useContext(CurrentUserContext);
+	const { renderedMovies } = context;
+
 	return (
 		<main className='movies'>
 			<SearchForm
@@ -33,7 +37,7 @@ function Movies({
 				<Preloader />
 			) : badSearchResult ? (
 				<SearchResults badSearchResult={badSearchResult} />
-			) : movies ? (
+			) : renderedMovies.length ? (
 				<MoviesCardList movies={movies} />
 			) : null}
 		</main>

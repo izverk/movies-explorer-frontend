@@ -1,8 +1,12 @@
 import React from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 
-function MoviesCardList({ movies }) {
+function MoviesCardList() {
+	const context = React.useContext(CurrentUserContext);
+	const { renderedMovies } = context;
+
 	// Стейт кнопки "Ещё"
 	const [isMoreButtonVisible, setIsMoreButtonVisible] = React.useState(true);
 	// Стейт количества карточек для отрисовки
@@ -34,8 +38,8 @@ function MoviesCardList({ movies }) {
 
 	// Определяем первоначальный массив карточек для текущей ширины окна
 	React.useEffect(() => {
-		setRenderedCards(movies.slice(0, renderedCardsAmount));
-	}, [movies, renderedCardsAmount]);
+		setRenderedCards(renderedMovies.slice(0, renderedCardsAmount));
+	}, [renderedMovies, renderedCardsAmount]);
 
 	// Запускаем слушатель текущей ширины окна
 	React.useEffect(() => {
@@ -49,18 +53,18 @@ function MoviesCardList({ movies }) {
 	}, []);
 	// Определяем видимость кнопки "Ещё" в зависимости от длины отображаемого массива
 	React.useEffect(() => {
-		if (renderedCards.length === movies.length) {
+		if (renderedCards.length === renderedMovies.length) {
 			setIsMoreButtonVisible(false);
 		} else {
 			setIsMoreButtonVisible(true);
 		}
-	}, [renderedCards, movies]);
+	}, [renderedCards, renderedMovies]);
 
 	// Обработчик нажатия кнопки "Ещё"
 	const handleMoreButtonClick = () => {
 		setRenderedCards(
 			renderedCards.concat(
-				movies.slice(
+				renderedMovies.slice(
 					renderedCards.length,
 					renderedCards.length + addedCardsAmount
 				)
