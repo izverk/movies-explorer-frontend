@@ -14,7 +14,11 @@ import ModalMenu from '../ModalMenu/ModalMenu';
 import moviesApi from '../../utils/MoviesApi';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { filterWithKeyWord, handleUrlAndDuration } from '../../utils/utils';
+import {
+	handleFields,
+	handleDuration,
+	filterWithKeyWord,
+} from '../../utils/utils';
 import {
 	queryErrorMessageText,
 	nothingFoundMessageText,
@@ -37,7 +41,7 @@ function App() {
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 	// Стейт сообщения с ошибкой отправки формы ввода данных
-	const [formSubmitError, setFormSubmitError] = React.useState('');
+	const [formSubmitError, setFormSubmitError] = React.useState(null);
 
 	// Функция регистрации пользователя
 	function registerUser({ name, email, password }) {
@@ -101,6 +105,22 @@ function App() {
 		checkTokenAndLoadContent();
 	}, [checkTokenAndLoadContent]);
 
+	// // Згружаем исходный массив фильмов
+	// React.useEffect(() => {
+	// 	moviesApi
+	// 		.getMovies()
+	// 		.then((data) => {
+	// 			console.log('🚀 ~ file: App.js ~ line 113 ~ .then ~ data', data);
+	// 			// формируем и обрабатываем поля объектов
+	// 			data = handleFields(data);
+	// 			console.log('🚀 ~ file: App.js ~ line 116 ~ .then ~ data', data);
+	// 			setInitialMovies(data);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// }, []);
+
 	// Функция загрузки контента текущего пользователя (ранее сохраненных данных поиска фильмов)
 	function getCurrentUserContent() {
 		const savedMovies = JSON.parse(localStorage.getItem('movies'));
@@ -123,59 +143,38 @@ function App() {
 
 	// Стейт с исходным массивом фильмов со стороннего сервиса
 	const [initialMovies, setInitialMovies] = React.useState([]);
-	console.log(
-		'🚀 ~ file: App.js ~ line 129 ~ App ~ initialMovies',
-		initialMovies
-	);
-	// Стейт с массивом фильмов, найденных по ключевому слову (и обработанных)
+	// Стейт с массивом фильмов, найденных по ключевому слову (и обработанных, оставлены только нужные для отрисовки поля)
 	const [movies, setMovies] = React.useState([]);
-	console.log('🚀 ~ file: App.js ~ line 131 ~ App ~ movies', movies);
 	// Стейт с массивом фильмов, дополнительно отфильтрованных по длительности
 	const [shortMovies, setShortMovies] = React.useState([]);
-	console.log('🚀 ~ file: App.js ~ line 133 ~ App ~ shortMovies', shortMovies);
-	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList
+	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList (здесь уже дополнительно обработаны два поля - duration и image.url)
 	const [renderedMovies, setRenderedMovies] = React.useState([]);
-	console.log(
-		'🚀 ~ file: App.js ~ line 135 ~ App ~ renderedMovies',
-		renderedMovies
-	);
 	// Стейт с массивом сохраненных фильмов
-	const [savedMovies, setSavedMovies] = React.useState(null);
+	const [savedMovies, setSavedMovies] = React.useState([]);
 	// Стейт со значением инпута формы поиска фильмов
 	const [moviesInputValue, setMoviesInputValue] = React.useState('');
 	// Стейт со значением чек-бокса короткометражек
 	const [shortFilmsCheckboxValue, setShortFilmsCheckboxValue] =
 		React.useState(false);
-	console.log(
-		'🚀 ~ file: App.js ~ line 147 ~ App ~ shortFilmsCheckboxValue',
-		shortFilmsCheckboxValue
-	);
 	// Стейт прелоадера для его отрисовки в момент загрузки фильмов
 	const [isPreloaderVisible, setIsPreloaderVisible] = React.useState(false);
-	// Стейт сообщения с результатом поиска фильмов
-	const [badSearchResult, setBadSearchResult] = React.useState('');
+	// Стейт сообщения с результатом поиска фильмов (потом сюда попадает строка, стейт используется и для условного рендеринга компонентов, и для отображения самого текста сообщения)
+	const [badSearchResult, setBadSearchResult] = React.useState(null);
 
 	// Функция получения и фильтрации фильмов
 	//  по нажатию кнопки поиска в SearchForm
 	const getAndFilterMovies = () => {
 		moviesApi
 			.getMovies()
-			.then((initialMovies) => {
-				// сохраняем в стейт исходный массив фильмов
-				setInitialMovies(initialMovies);
+			.then((data) => {
+				console.log('🚀 ~ file: App.js ~ line 170 ~ .then ~ data', data);
+				// формируем и обрабатываем поля объектов исходного массива фильмов
+				data = handleFields(data);
+				console.log('🚀 ~ file: App.js ~ line 173 ~ .then ~ data', data);
+				// сохраняем в стейт
+				setInitialMovies(data);
 				// фильтруем фильмы по ключевому слову
-				const filteredMovies = filterWithKeyWord(
-					initialMovies,
-					moviesInputValue
-				);
-
-				// // обрабатываем поля duration, image.url
-				// const handledMovies = handleUrlAndDuration(filteredWithKeyWord);
-				// console.log(
-				// 	'🚀 ~ file: App.js ~ line 101 ~ .then ~ handledMovies',
-				// 	handledMovies
-				// );
-
+				const filteredMovies = filterWithKeyWord(data, moviesInputValue);
 				// убираем прелоадер
 				setIsPreloaderVisible(false);
 				// при удачном поиске сохраняем его в локальном хранилище и в стейте
@@ -200,18 +199,42 @@ function App() {
 				setBadSearchResult(queryErrorMessageText);
 			});
 	};
-	// Выбираем массив фильмов для отображения в зависимости от
-	// чек-бокса короткометражек, готовим его к отрисовке
-	// (обрабатываем поля image.url и duration) и сохраняем в стейт
+
+	// Готовим массив фильмов для отображения в зависимости от
+	// чек-бокса короткометражек:
+	// - преобразуем числовое поле duration в строку вида "__ ч __ м"
+	// - добавляем фмльмам лайки из сохраненных фильмов
 	React.useEffect(() => {
+		// если стоит чек-бокс, берем короткометражки
 		let renderedFilms;
 		if (shortFilmsCheckboxValue) {
-			renderedFilms = shortMovies;
+			renderedFilms = [...shortMovies];
 		} else {
-			renderedFilms = movies;
+			renderedFilms = [...movies];
 		}
-		setRenderedMovies(handleUrlAndDuration(renderedFilms));
-	}, [movies, shortMovies, shortFilmsCheckboxValue, setRenderedMovies]);
+		// добавляем лайки из массива сохраненных фильмов
+		renderedFilms = renderedFilms.map((item) => {
+			return {
+				...item,
+				isLiked: savedMovies.some((savedMovie) => {
+					return item.movieId === savedMovie.movieId;
+				}),
+			};
+		});
+		// обрабатываем поле длительность и сохр в стейт
+		renderedFilms = handleDuration(renderedFilms);
+		setRenderedMovies(renderedFilms);
+		console.log(
+			'🚀 ~ file: App.js ~ line 225 ~ React.useEffect ~ renderedFilms',
+			renderedFilms
+		);
+	}, [
+		movies,
+		shortMovies,
+		savedMovies,
+		shortFilmsCheckboxValue,
+		setRenderedMovies,
+	]);
 
 	return (
 		<CurrentUserContext.Provider

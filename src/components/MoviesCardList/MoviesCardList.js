@@ -76,7 +76,7 @@ function MoviesCardList() {
 		<div className='movies-card-list'>
 			<ul className='movies-card-list__list'>
 				{renderedCards.map((movie) => {
-					return <MoviesCard key={movie.id} movie={movie} />;
+					return <MoviesCard key={movie.movieId} movie={movie} />;
 				})}
 			</ul>
 			{isMoreButtonVisible && (

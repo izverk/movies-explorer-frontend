@@ -19,7 +19,7 @@ function SavedMovies({
 	return (
 		<main className='saved-movies'>
 			<SearchForm />
-			<MoviesCardList movies={savedMovies} />
+			<MoviesCardList />
 		</main>
 	);
 }

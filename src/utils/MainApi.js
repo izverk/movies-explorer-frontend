@@ -68,7 +68,7 @@ class MainApi {
 		}).then(this._checkResponse);
 	}
 
-	// Получение начального массива карточек
+	// Получение массива сохраненных карточек
 	getCards() {
 		return fetch(`${this._baseUrl}movies`, {
 			method: 'GET',

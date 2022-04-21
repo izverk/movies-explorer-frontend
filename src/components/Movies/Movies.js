@@ -5,6 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchResults from '../SearchResults/SearchResults';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import mainApi from '../../utils/MainApi';
 
 function Movies({
 	movies,
@@ -19,7 +20,19 @@ function Movies({
 	setBadSearchResult,
 }) {
 	const context = React.useContext(CurrentUserContext);
-	const { renderedMovies } = context;
+	const { renderedMovies, setSavedMovies } = context;
+
+	// Загружаем сохраненные фильмы при монтировании компонента
+	React.useEffect(() => {
+		mainApi
+			.getCards()
+			.then((data) => {
+				setSavedMovies(data);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [setSavedMovies]);
 
 	return (
 		<main className='movies'>

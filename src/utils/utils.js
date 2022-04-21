@@ -3,36 +3,52 @@ import { moviesApiURL } from './constants';
 
 // Функция фильтрации фильмов по ключевому слову
 export function filterWithKeyWord(movies, keyWord) {
-	const filteredMovies = movies.filter((movie) => {
+	return movies.filter((movie) => {
 		return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
-	});
-	// оставляем только нужные поля для отрисовки
-	return filteredMovies.map((item) => {
-		return {
-			id: item.id,
-			nameRU: item.nameRU,
-			image: { url: item.image.url },
-			trailerLink: item.trailerLink,
-			duration: item.duration,
-		};
 	});
 }
 // Функция фильтрации фильмов по длительности
 export function filterWithDuration(movies) {
 	const durationLimit = 40;
-	return movies.filter((movie) => {
-		return movie.duration <= durationLimit;
+	return movies.filter((movie) => movie.duration <= durationLimit);
+}
+// // Функция обработки поля image.url объектов массива фильмов
+// export function handleUrl(movies) {
+// 	return movies.map((movie) => {
+// 		const handledURL = moviesApiURL + movie.image.url;
+// 		return {
+// 			...movie,
+// 			image: { url: handledURL },
+// 		};
+// 	});
+// }
+// Функция формирования и первичной обработки полей объектов исходного массива фильмов
+// (оставляем только нужные поля для дальнейшей работы + делаем ссылки абсолютными)
+export function handleFields(movies) {
+	return movies.map((movie) => {
+		return {
+			country: movie.country || ' ',
+			director: movie.director || ' ',
+			duration: movie.duration || 0,
+			year: movie.year || ' ',
+			description: movie.description || ' ',
+			image: moviesApiURL + movie.image.url || ' ',
+			trailerLink: movie.trailerLink || ' ',
+			thumbnail: moviesApiURL + movie.image.formats.thumbnail.url || ' ',
+			movieId: movie.id || -1,
+			nameRU: movie.nameRU || ' ',
+			nameEN: movie.nameEN || ' ',
+		};
 	});
 }
-// Функция обработки полей объектов массива фильмов (обрабатываем duration, image.url)
-export function handleUrlAndDuration(movies) {
+
+// Функция обработки поля duration объектов массива фильмов
+export function handleDuration(movies) {
 	return movies.map((movie) => {
 		const handledDuration =
 			Math.trunc(movie.duration / 60) + ' ч ' + (movie.duration % 60) + ' м';
-		const handledURL = moviesApiURL + movie.image.url;
 		return {
 			...movie,
-			image: { url: handledURL },
 			duration: handledDuration,
 		};
 	});
