@@ -77,22 +77,42 @@ function App() {
 			});
 	}
 
-	// Функция проверки наличия токена и запуска загрузки контента текущего пользователя (ранее сохраненных данных поиска фильмов)
+	// Функция проверки наличия токена и запуска загрузки его контента
+	// (ранее сохраненных фильмов, параметров и результатов поиска фильмов)
 	const checkTokenAndLoadContent = React.useCallback(() => {
 		const token = localStorage.getItem('token');
 		if (token) {
+			// запрашиваем у сервера проверку токена
 			mainApi
 				.checkToken(token)
 				.then((userData) => {
+					// сохраняем юзера в стейт
 					setCurrentUser({
 						name: userData.name,
 						_id: userData._id,
 						email: userData.email,
 					});
 					setIsLoggedIn(true);
+					// устанавливаем токен в заголовки запросов
 					mainApi.setTokenHeaders(token);
+					// достаем результаты поиска из хранилища
+					getSavedSearchResults();
+				})
+				.then(() => {
+					// запрашиваем у сервера сохраненные фильмы
+					// текущего пользователя
+					mainApi
+						.getCards()
+						.then((data) => {
+							// добавляем их в стейт
+							setSavedMovies(data);
+						})
+						.catch((err) => {
+							console.log(err);
+						});
+				})
+				.then(() => {
 					history.push('/movies');
-					getCurrentUserContent();
 				})
 				.catch((err) => {
 					console.log(err);
@@ -100,7 +120,7 @@ function App() {
 		}
 	}, [history]);
 
-	// Проверяем наличие токена в хранилще и загружаем контент текущего пользователя
+	// Запускаем проверку токена и загрузку контента текущего пользователя
 	React.useEffect(() => {
 		checkTokenAndLoadContent();
 	}, [checkTokenAndLoadContent]);
@@ -121,8 +141,9 @@ function App() {
 	// 		});
 	// }, []);
 
-	// Функция загрузки контента текущего пользователя (ранее сохраненных данных поиска фильмов)
-	function getCurrentUserContent() {
+	// Функция загрузки контента текущего пользователя (ранее
+	//  сохраненных фильмов, параметров и результатов поиска фильмов)
+	function getSavedSearchResults() {
 		const savedMovies = JSON.parse(localStorage.getItem('movies'));
 		const savedSearchText = localStorage.getItem('moviesInputValue');
 		const savedСheckboxState = JSON.parse(
@@ -138,6 +159,18 @@ function App() {
 			setShortFilmsCheckboxValue(savedСheckboxState);
 		}
 	}
+
+	// // Загружаем сохраненные фильмы при монтировании компонента
+	// React.useEffect(() => {
+	// 	mainApi
+	// 		.getCards()
+	// 		.then((data) => {
+	// 			setSavedMovies(data);
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// }, [setSavedMovies]);
 
 	// =================== ЛОГИКА РАБОТЫ С КАРТОЧКАМИ ФИЛЬМОВ ===================
 

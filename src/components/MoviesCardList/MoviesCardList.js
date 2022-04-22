@@ -1,11 +1,13 @@
 import React from 'react';
+import { Route } from 'react-router-dom';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { Switch } from 'react-router-dom';
 
 function MoviesCardList() {
 	const context = React.useContext(CurrentUserContext);
-	const { renderedMovies } = context;
+	const { renderedMovies, savedMovies } = context;
 
 	// Стейт кнопки "Ещё"
 	const [isMoreButtonVisible, setIsMoreButtonVisible] = React.useState(true);
@@ -73,21 +75,34 @@ function MoviesCardList() {
 	};
 
 	return (
-		<div className='movies-card-list'>
-			<ul className='movies-card-list__list'>
-				{renderedCards.map((movie) => {
-					return <MoviesCard key={movie.movieId} movie={movie} />;
-				})}
-			</ul>
-			{isMoreButtonVisible && (
-				<button
-					className='app__link app__button movies-card-list__more-button'
-					type='button'
-					onClick={handleMoreButtonClick}>
-					Ещё
-				</button>
-			)}
-		</div>
+		<Switch>
+			<Route path='/movies'>
+				<div className='movies-card-list'>
+					<ul className='movies-card-list__list'>
+						{renderedCards.map((movie) => {
+							return <MoviesCard key={movie.movieId} movie={movie} />;
+						})}
+					</ul>
+					{isMoreButtonVisible && (
+						<button
+							className='app__link app__button movies-card-list__more-button'
+							type='button'
+							onClick={handleMoreButtonClick}>
+							Ещё
+						</button>
+					)}
+				</div>
+			</Route>
+			<Route path='/saved-movies'>
+				<div className='movies-card-list'>
+					<ul className='movies-card-list__list'>
+						{renderedCards.map((movie) => {
+							return <MoviesCard key={movie.movieId} movie={movie} />;
+						})}
+					</ul>
+				</div>
+			</Route>
+		</Switch>
 	);
 }
 

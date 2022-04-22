@@ -22,18 +22,6 @@ function Movies({
 	const context = React.useContext(CurrentUserContext);
 	const { renderedMovies, setSavedMovies } = context;
 
-	// Загружаем сохраненные фильмы при монтировании компонента
-	React.useEffect(() => {
-		mainApi
-			.getCards()
-			.then((data) => {
-				setSavedMovies(data);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, [setSavedMovies]);
-
 	return (
 		<main className='movies'>
 			<SearchForm
