@@ -91,6 +91,7 @@ function App() {
 					mainApi
 						.getCards()
 						.then((data) => {
+							console.log('🚀 ~ file: App.js ~ line 94 ~ .then ~ data', data);
 							// добавляем их в стейт
 							setSavedMovies(data);
 						})

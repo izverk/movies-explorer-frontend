@@ -51,10 +51,6 @@ function SearchForm() {
 		if (!savedMoviesInputValue) {
 			// если пусто, обнуляем стейт фильтрованных фильмов (в SavedMovies по нему проводится проверка и если он пустой, выбирается другой - исходный массив сохраненных фильмов для отрисовки)
 			setFilteredSavedMovies([]);
-			console.log(
-				'🚀 ~ file: SearchForm.js ~ line 59 ~ handleSavedMoviesSearchClick ~ savedMoviesInputValue',
-				savedMoviesInputValue
-			);
 			return;
 		}
 		setBadSearchResult(null);
@@ -68,13 +64,8 @@ function SearchForm() {
 			.then((data) => {
 				// формируем и обрабатываем поля объектов исходного массива фильмов
 				data = handleFields(data);
-				console.log('🚀 ~ file: SearchForm.js ~ line 59 ~ .then ~ data', data);
 				// фильтруем по ключевому слову (фильтрация по чек-боксу короткометражек делается уже потом в Movies, что бы разнести логику работы этих фильтров, т.к. чек-бокс включает/выключает фильтрацию каждый раз при изменении своего значения, а инпут - нет. При этом чек-боксом фильтруется именно этот массив, который получен из данного значения инпута и поменяется этот массив только при следующем нажатии кнопки поиска)
 				const filteredByKeyWord = filterWithKeyWord(data, moviesInputValue);
-				console.log(
-					'🚀 ~ file: SearchForm.js ~ line 64 ~ .then ~ filteredByKeyWord',
-					filteredByKeyWord
-				);
 				// сохраняем в стейт для дальнейшего использования при рендеринге
 				setMovies(filteredByKeyWord);
 				// если установлен чек-бокс, фильтруем по длительности, что бы понять итоговый результат
@@ -84,10 +75,6 @@ function SearchForm() {
 				} else {
 					finallyFiltered = filteredByKeyWord;
 				}
-				console.log(
-					'🚀 ~ file: SearchForm.js ~ line 71 ~ .then ~ finallyFiltered',
-					finallyFiltered
-				);
 				// при удачном поиске сохраняем его
 				if (finallyFiltered.length) {
 					localStorage.setItem('movies', JSON.stringify(finallyFiltered));
@@ -120,10 +107,6 @@ function SearchForm() {
 		const filteredByKeyWord = filterWithKeyWord(
 			savedMovies,
 			savedMoviesInputValue
-		);
-		console.log(
-			'🚀 ~ file: SearchForm.js ~ line 130 ~ filterSavedMovies ~ filteredByKeyWord',
-			filteredByKeyWord
 		);
 		// при удачном поиске сохраняем в стейте
 		if (filteredByKeyWord.length) {
