@@ -40,8 +40,8 @@ class MainApi {
 	setTokenHeaders(token) {
 		this._headers = {
 			...this._headers,
-			Authorization: `Bearer ${token}`,
-			// Authorization: token, --- без Bearer лучше не делать, т.к. браузер всё равно его подставляет, лучше пусть будет единая логика (на фронте добавили Bearer, на бэке - убрали), + так было в тренажере
+			Authorization: token,
+			// Authorization: `Bearer ${token}`,--- если Bearer дбавлять здесь, то и на бэке нужно уго убирать при проверке
 		};
 	}
 
@@ -51,7 +51,8 @@ class MainApi {
 			method: 'GET',
 			headers: {
 				...this._headers,
-				Authorization: `Bearer ${token}`,
+				// Authorization: `Bearer ${token}`,
+				Authorization: token,
 			},
 		}).then(this._checkResponse);
 	}
