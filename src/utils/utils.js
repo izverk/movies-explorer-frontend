@@ -3,25 +3,18 @@ import { moviesApiURL } from './constants';
 
 // Функция фильтрации фильмов по ключевому слову
 export function filterWithKeyWord(movies, keyWord) {
-	return movies.filter((movie) => {
-		return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
-	});
+	if (keyWord) {
+		return movies.filter((movie) => {
+			return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
+		});
+	}
 }
 // Функция фильтрации фильмов по длительности
 export function filterWithDuration(movies) {
 	const durationLimit = 40;
 	return movies.filter((movie) => movie.duration <= durationLimit);
 }
-// // Функция обработки поля image.url объектов массива фильмов
-// export function handleUrl(movies) {
-// 	return movies.map((movie) => {
-// 		const handledURL = moviesApiURL + movie.image.url;
-// 		return {
-// 			...movie,
-// 			image: { url: handledURL },
-// 		};
-// 	});
-// }
+
 // Функция формирования и первичной обработки полей объектов исходного массива фильмов
 // (оставляем только нужные поля для дальнейшей работы + делаем ссылки абсолютными)
 export function handleFields(movies) {

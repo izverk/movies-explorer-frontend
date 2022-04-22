@@ -2,7 +2,6 @@ import React from 'react';
 import './MoviesLikeButton.css';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { moviesApiURL } from '../../utils/constants';
 
 function MoviesLikeButton({ movie }) {
 	const context = React.useContext(CurrentUserContext);
@@ -17,18 +16,10 @@ function MoviesLikeButton({ movie }) {
 			const savedMovie = movies.find((item) => {
 				return movie.movieId === item.movieId;
 			});
-			console.log(
-				'🚀 ~ file: MoviesLikeButton.js ~ line 10 ~ MoviesLikeButton ~ savedMovies',
-				savedMovies
-			);
 			// отправляем запрос на сервер
 			mainApi
 				.createCard(savedMovie)
 				.then((movie) => {
-					console.log(
-						'🚀 ~ file: MoviesLikeButton.js ~ line 28 ~ .then ~ movie',
-						movie
-					);
 					// добавляем фильм в массив сохраненных фильмов
 					setSavedMovies([...savedMovies, movie]);
 				})
@@ -41,14 +32,6 @@ function MoviesLikeButton({ movie }) {
 			const deletedMovie = savedMovies.find((item) => {
 				return movie.movieId === item.movieId;
 			});
-			console.log(
-				'🚀 ~ file: MoviesLikeButton.js ~ line 38 ~ deletedMovie ~ savedMovies',
-				savedMovies
-			);
-			console.log(
-				'🚀 ~ file: MoviesLikeButton.js ~ line 40 ~ deletedMovie ~ deletedMovie',
-				deletedMovie
-			);
 			// а вот в БД при сохранении присваивается уже свой айдишник -_id, его и отправляем для удаления карточки (он есть в сохраненных фильмах, т.к. они получены с сервера)
 			mainApi
 				.deleteCard(deletedMovie._id)

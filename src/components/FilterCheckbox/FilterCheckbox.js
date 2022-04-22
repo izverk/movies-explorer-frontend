@@ -1,50 +1,49 @@
-import React, { useCallback } from 'react';
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './FilterCheckbox.css';
-import { filterWithDuration } from '../../utils/utils';
-import { nothingFoundMessageText } from '../../utils/constants';
 
 function FilterCheckbox() {
 	const context = React.useContext(CurrentUserContext);
 	const {
-		movies,
-		setShortMovies,
 		shortFilmsCheckboxValue,
 		setShortFilmsCheckboxValue,
-		setBadSearchResult,
+		shortSavedFilmsCheckboxValue,
+		setShortSavedFilmsCheckboxValue,
 	} = context;
 
-	// Обработчик изменения значения чек-бокса короткометражек
-	const handleChange = (e) => {
+	// Обработчик изменения значения чек-бокса короткометражек для роута /movies
+	const handleMoviesFiltration = (e) => {
 		setShortFilmsCheckboxValue(e.target.checked);
 	};
-	// Функция включения/выключения фильтра короткометражек
-	const filterShortFilms = useCallback(() => {
-		if (shortFilmsCheckboxValue) {
-			const shortFilms = filterWithDuration(movies);
-			if (shortFilms.length) {
-				setShortMovies(shortFilms);
-			} else {
-				setBadSearchResult(nothingFoundMessageText);
-			}
-		} else {
-			setBadSearchResult(null);
-		}
-	}, [movies, shortFilmsCheckboxValue, setShortMovies, setBadSearchResult]);
 
-	React.useEffect(() => {
-		filterShortFilms();
-	}, [shortFilmsCheckboxValue, filterShortFilms]);
+	// Обработчик изменения значения чек-бокса короткометражек для роута /saved-movies
+	const handleSavedMoviesFiltration = (e) => {
+		setShortSavedFilmsCheckboxValue(e.target.checked);
+	};
 
 	return (
 		<label className='filter'>
-			<input
-				type='checkbox'
-				checked={shortFilmsCheckboxValue}
-				className='filter__checkbox'
-				name='filterCheckbox'
-				onChange={handleChange}
-			/>
+			<Switch>
+				<Route path='/movies'>
+					<input
+						type='checkbox'
+						checked={shortFilmsCheckboxValue}
+						className='filter__checkbox'
+						name='filterCheckbox'
+						onChange={handleMoviesFiltration}
+					/>
+				</Route>
+				<Route path='/saved-movies'>
+					<input
+						type='checkbox'
+						checked={shortSavedFilmsCheckboxValue}
+						className='filter__checkbox'
+						name='filterCheckbox'
+						onChange={handleSavedMoviesFiltration}
+					/>
+				</Route>
+			</Switch>
 			<span className='filter__pseudo-checkbox' />
 			Короткометражки
 		</label>
