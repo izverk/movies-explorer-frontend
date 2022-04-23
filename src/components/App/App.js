@@ -41,7 +41,7 @@ function App() {
 				loginUser({ email, password });
 			})
 			.catch((err) => {
-				console.log('🚀 ~ file: Register.js ~ line 35 ~ .then ~ err', err);
+				console.log(err);
 				// выводим ошибку отправки данных в компоненте AuthForm
 				setFormSubmitError(formSubmitErrorText);
 			});
