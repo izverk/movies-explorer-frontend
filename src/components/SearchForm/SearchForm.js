@@ -31,7 +31,7 @@ function SearchForm() {
 		savedMovies,
 	} = context;
 
-	// Обработка клика фильтрации сохраненных фильмов (для роута /movies)
+	// Обработка кнопки поиска фильмов (для роута /movies)
 	const handleMoviesSearchClick = (e) => {
 		e.preventDefault();
 		// проверка наличия данных в инпуте
@@ -44,7 +44,7 @@ function SearchForm() {
 		getAndFilterMovies();
 	};
 
-	// Обработка клика фильтрации сохраненных фильмов (для роута /saved-movies)
+	// Обработка клика кнопки поиска для сохраненных фильмов (для роута /saved-movies)
 	const handleSavedMoviesSearchClick = (e) => {
 		e.preventDefault();
 		// проверка наличия данных в инпуте
@@ -57,7 +57,7 @@ function SearchForm() {
 		filterSavedMovies();
 	};
 
-	// Функция фильтрации фильмов (по ключевому слову) для роута /movies
+	// Функция получения от стороннего сервиса фильмов и фильтрации (по ключевому слову) для роута /movies
 	const getAndFilterMovies = () => {
 		moviesApi
 			.getMovies()
@@ -68,7 +68,7 @@ function SearchForm() {
 				const filteredByKeyWord = filterWithKeyWord(data, moviesInputValue);
 				// сохраняем в стейт для дальнейшего использования при рендеринге
 				setMovies(filteredByKeyWord);
-				// если установлен чек-бокс, фильтруем по длительности, что бы понять итоговый результат
+				// если установлен чек-бокс, фильтруем по длительности, что бы понять итоговый результат и принять решение о сохранении поиска
 				let finallyFiltered = [];
 				if (shortFilmsCheckboxValue) {
 					finallyFiltered = filterWithDuration(filteredByKeyWord);
