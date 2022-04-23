@@ -13,10 +13,12 @@ import Page404 from '../Page404/Page404';
 import ModalMenu from '../ModalMenu/ModalMenu';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { formSubmitErrorText } from '../../utils/constants';
+import { formSubmitErrorText, PAGE_WITHOUT_AUT } from '../../utils/constants';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
-function App() {
+function App(props) {
 	const history = useHistory();
+	const location = useLocation();
 
 	// Стейт модального меню навигации
 	const [modalMenuState, setModalMenuState] = React.useState(false);
@@ -28,8 +30,10 @@ function App() {
 
 	// Стейт с данными текущего пользователя
 	const [currentUser, setCurrentUser] = React.useState({});
+
 	// Стейт авторизованности пользователя
 	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+
 	// Стейт сообщения с ошибкой отправки формы ввода данных
 	const [formSubmitError, setFormSubmitError] = React.useState(null);
 
@@ -94,24 +98,35 @@ function App() {
 							// добавляем их в стейт
 							setSavedMovies(data);
 						})
+						// .then(() => {
+						// 	// // редиректим авторизовавшегося пользователя на страницу фильмов
+						// 	history.push('/movies');
+						// })
+						// редирект делается ниже в useEffect
 						.catch((err) => {
 							console.log(err);
 						});
-				})
-				.then(() => {
-					// редиректим авторизовавшегося пользователя на страницу фильмов
-					history.push('/movies');
 				})
 				.catch((err) => {
 					console.log(err);
 				});
 		}
-	}, [history]);
+	}, []);
 
 	// Запускаем проверку токена и загрузку контента текущего пользователя
 	React.useEffect(() => {
 		checkTokenAndLoadContent();
 	}, [checkTokenAndLoadContent]);
+
+	// Обеспечиваем правильный редирект при вводе пользователем маршрута в строку адреса браузера
+	// (Если пользователь залогинен, то на страницу /movies он попадет только если в строке адреса указана страница авторизации или регистрации, а если наберет в строке другую локацию, то на неё и попадет. Если же будет не залогинен, то дальше при рендеринге произойдет редирект, за который отвечают соответствующий код внутри Route)
+	React.useEffect(() => {
+		if (isLoggedIn && PAGE_WITHOUT_AUT.includes(location.pathname)) {
+			history.push('/movies');
+		} else {
+			history.push(location.pathname);
+		}
+	}, [history, isLoggedIn, location.pathname]);
 
 	// =================== Стейты для работы С КАРТОЧКАМИ ФИЛЬМОВ ===================
 
@@ -229,16 +244,7 @@ function App() {
 							</Route>
 							<Route path='/profile'>
 								{/* защита маршрута */}
-								{() =>
-									!isLoggedIn ? (
-										<Redirect to='/' />
-									) : (
-										<Profile
-										// isLoggedIn={isLoggedIn}
-										// setIsLoggedIn={setIsLoggedIn}
-										/>
-									)
-								}
+								{() => (!isLoggedIn ? <Redirect to='/' /> : <Profile />)}
 							</Route>
 						</Switch>
 

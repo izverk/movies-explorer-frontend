@@ -9,10 +9,9 @@ import {
 	formSubmitSuccesText,
 } from '../../utils/constants';
 
-// function Profile({ isLoggedIn, setIsLoggedIn }) {
 function Profile() {
 	const history = useHistory();
-	// достаём необходимое из контекста
+
 	const context = React.useContext(CurrentUserContext);
 	const {
 		setIsLoggedIn,
