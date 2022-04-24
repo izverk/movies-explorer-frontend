@@ -15,6 +15,11 @@ function FilterCheckbox() {
 	// Обработчик изменения значения чек-бокса короткометражек для роута /movies
 	const handleMoviesFiltration = (e) => {
 		setShortFilmsCheckboxValue(e.target.checked);
+		try {
+			localStorage.setItem('shortFilmsCheckboxValue', e.target.checked);
+		} catch (err) {
+			console.log(err);
+		}
 	};
 
 	// Обработчик изменения значения чек-бокса короткометражек для роута /saved-movies

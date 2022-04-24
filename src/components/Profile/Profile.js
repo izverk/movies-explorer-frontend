@@ -14,25 +14,33 @@ function Profile() {
 
 	const context = React.useContext(CurrentUserContext);
 	const {
+		setInitialMovies,
 		setIsLoggedIn,
 		currentUser,
 		setCurrentUser,
+		setMovies,
+		setMoviesInputValue,
+		setShortFilmsCheckboxValue,
 		formSubmitError,
 		setFormSubmitError,
-		shortFilmsCheckboxValue,
+		setIsFirstSearchHappened,
 	} = context;
 
 	// Стейт сообщения пользователю об успешной отправке данных
 	const [formSubmitSucces, setFormSubmitSucces] = React.useState(null);
 
-	// Выход из профиля (меняем стейты, удаляем токен и редиректим на главную)
+	// Выход из профиля (меняем стейты, удаляем данные текущего пользователя из хранилища и редиректим на главную)
 	const handleProfileExit = (e) => {
+		setInitialMovies([]);
+		setMovies([]);
+		setMoviesInputValue('');
+		setShortFilmsCheckboxValue(false);
+		setIsFirstSearchHappened(true);
 		try {
-			localStorage.setItem(
-				'shortFilmsCheckboxValue',
-				JSON.stringify(shortFilmsCheckboxValue)
-			);
 			localStorage.removeItem('token');
+			localStorage.removeItem('movies');
+			localStorage.removeItem('moviesInputValue');
+			localStorage.removeItem('shortFilmsCheckboxValue');
 		} catch (err) {
 			console.log(err);
 		}

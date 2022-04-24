@@ -8,8 +8,8 @@ export const moviesApiConfig = {
 
 // Конфиг API основного сервера приложения
 export const mainApiConfig = {
-	// baseUrl: 'http://localhost:3001/api/',
-	baseUrl: 'https://api.movies-explorer.izver.nomoredomains.work/api/',
+	baseUrl: 'http://localhost:3001/api/',
+	// baseUrl: 'https://api.movies-explorer.izver.nomoredomains.work/api/',
 	headers: {
 		'Content-Type': 'application/json',
 	},
@@ -28,3 +28,7 @@ export const formSubmitErrorText = 'Что-то пошло не так! Попр
 export const formSubmitSuccesText = 'Данные успешно отправлены!';
 export const nothingFoundMessageText = 'Ничего не найдено';
 export const needKeyWordMessageText = 'Нужно ввести ключевое слово';
+export const NAME_INPUT_ERROR_MESSAGE =
+	'Некорректноеи имя (должно содержать только латиницу, кириллицу, пробел или дефис)';
+export const EMAIL_INPUT_ERROR_MESSAGE =
+	'email не соответствует шаблону электронной почты';

@@ -1,8 +1,13 @@
 import { useState, useEffect, useCallback } from 'react';
 import { moviesApiURL } from './constants';
+// import Joi from 'joi';
+import {
+	NAME_INPUT_ERROR_MESSAGE,
+	EMAIL_INPUT_ERROR_MESSAGE,
+} from './constants';
 
 // Функция фильтрации фильмов по ключевому слову
-export function filterWithKeyWord(movies, keyWord) {
+export function filterByKeyWord(movies, keyWord) {
 	if (keyWord) {
 		return movies.filter((movie) => {
 			return movie.nameRU.toLowerCase().includes(keyWord.toLowerCase());
@@ -10,7 +15,7 @@ export function filterWithKeyWord(movies, keyWord) {
 	}
 }
 // Функция фильтрации фильмов по длительности
-export function filterWithDuration(movies) {
+export function filterByDuration(movies) {
 	const durationLimit = 40;
 	return movies.filter((movie) => movie.duration <= durationLimit);
 }
@@ -85,20 +90,70 @@ export function useClosePopupByMouse(
 	}, [isOpen, overlayClassName, closeButtonClassName, closePopupHandler]);
 }
 
-// Функция валидации форм
+// ФУНКЦИЯ ВАЛИДАЦИИ ФОРМ ВВОДА ДАННЫХ
 export function useFormValidation() {
+	// стейты инпутов, ошибок и влидности
 	const [values, setValues] = useState({});
 	const [errors, setErrors] = useState({});
 	const [isValid, setIsValid] = useState(false);
 
+	// обработчик изменений в инпутах
 	function handleValuesChange(e) {
 		const name = e.target.name;
-
 		setValues({ ...values, [name]: e.target.value });
-		setErrors({ ...errors, [name]: e.target.validationMessage });
-		setIsValid(e.target.closest('form').checkValidity());
+		setErrors({
+			...errors,
+			[name]:
+				e.target.validationMessage || validateNameAndEmail(e).errorMessage,
+		});
+		setIsValid(
+			e.target.closest('form').checkValidity() &&
+				validateNameAndEmail(e).isValid
+		);
 	}
-	// Функция для для сброса инпутов, сообщений об ошибках ввода и состояния кнопки в попапах,
+
+	// дополнительный кастомный валидатор для name и email
+	function validateNameAndEmail(e) {
+		const nameRegExp = /^[ a-zA-Zа-яА-ЯёЁ-]{3,16}$/;
+		const emailRegExp = /^[A-Z0-9._%+-]+@[A-Z0-9-]+.+.[A-Z]{2,4}$/i;
+		if (e.target.name === 'nameInput' && !nameRegExp.test(e.target.value)) {
+			return { errorMessage: NAME_INPUT_ERROR_MESSAGE, isValid: false };
+		}
+		if (e.target.name === 'emailInput' && !emailRegExp.test(e.target.value)) {
+			return { errorMessage: EMAIL_INPUT_ERROR_MESSAGE, isValid: false };
+		}
+		return { errorMessage: undefined, isValid: true };
+	}
+
+	// дополнительный валидатор с использованием Joi
+	// function validateByJoi(e) {
+	// 	const inputs = {
+	// 		nameInput: Joi.string()
+	// 			.min(3)
+	// 			.max(16)
+	// 			.pattern(new RegExp('^[a-zA-Zа-яА-ЯёЁ-\\s]{3,16}$'))
+	// 			.required(),
+	// 		emailInput: Joi.string()
+	// 			.email({ tlds: { allow: false } })
+	// 			.required(),
+	// 		passwordInput: Joi.string().min(6).required(),
+	// 	};
+	// 	const { error } = inputs[e.target.name].validate(e.target.value);
+	// 	let errorMessage;
+	// 	if (e.target.name === 'nameInput') {
+	// 		errorMessage = NAME_INPUT_ERROR_MESSAGE;
+	// 	}
+	// 	if (e.target.name === 'emailInput') {
+	// 		errorMessage = EMAIL_INPUT_ERROR_MESSAGE;
+	// 	}
+
+	// 	if (error) {
+	// 		return { errorMessage: errorMessage, isValid: false };
+	// 	}
+	// 	return { errorMessage: undefined, isValid: true };
+	// }
+
+	// функция для для сброса инпутов, сообщений об ошибках ввода и состояния кнопки в попапах,
 	// использующих валидацию (мемоизирован во избежание зацикливания ререндеринга)
 	const resetValidation = useCallback(
 		function ({ values = {}, errors = {}, isValid = false }) {

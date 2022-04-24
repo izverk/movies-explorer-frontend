@@ -121,15 +121,19 @@ function App(props) {
 	// Обеспечиваем правильный редирект при вводе пользователем маршрута в строку адреса браузера
 	// (Если пользователь залогинен, то на страницу /movies он попадет только если в строке адреса указана страница авторизации или регистрации, а если наберет в строке другую локацию, то на неё и попадет. Если же будет не залогинен, то дальше при рендеринге произойдет редирект, за который отвечают соответствующий код внутри Route)
 	React.useEffect(() => {
-		if (isLoggedIn && PAGE_WITHOUT_AUT.includes(location.pathname)) {
-			history.push('/movies');
-		} else {
-			history.push(location.pathname);
+		if (isLoggedIn) {
+			if (PAGE_WITHOUT_AUT.includes(location.pathname)) {
+				history.push('/movies');
+			} else {
+				history.push(location.pathname);
+			}
 		}
 	}, [history, isLoggedIn, location.pathname]);
 
 	// =================== Стейты для работы С КАРТОЧКАМИ ФИЛЬМОВ ===================
 
+	// Стейт с массивом исходных фильмов со стороннего сервиса
+	const [initialMovies, setInitialMovies] = React.useState([]);
 	// Стейт с массивом найденных фильмов по ключевому слову
 	const [movies, setMovies] = React.useState([]);
 	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList (в нем уже сделан выбор между полным списком и короткометражками, а также преобразовано поле - duration). Для страниц /movies и /saved-movies это разные списки.
@@ -152,6 +156,9 @@ function App(props) {
 	const [isPreloaderVisible, setIsPreloaderVisible] = React.useState(false);
 	// Стейт сообщения с результатом поиска фильмов (потом сюда попадает строка, стейт используется и для условного рендеринга компонентов, и для отображения самого текста сообщения)
 	const [badSearchResult, setBadSearchResult] = React.useState(null);
+	// Стейт, отражающий факт того, что текущим пользователем запущен первый запрос фильмов (очищается при выходе из аккаунта, так же как и стейты isLoggedIn, currentUser и результаты поиска фильмов в локальном хранилище)
+	const [isFirstSearchHappened, setIsFirstSearchHappened] =
+		React.useState(false);
 
 	return (
 		<CurrentUserContext.Provider
@@ -164,6 +171,8 @@ function App(props) {
 				setIsLoggedIn,
 				formSubmitError,
 				setFormSubmitError,
+				initialMovies,
+				setInitialMovies,
 				movies,
 				setMovies,
 				savedMovies,
@@ -184,6 +193,8 @@ function App(props) {
 				setIsPreloaderVisible,
 				badSearchResult,
 				setBadSearchResult,
+				isFirstSearchHappened,
+				setIsFirstSearchHappened,
 			}}>
 			<div className='app'>
 				<Switch>

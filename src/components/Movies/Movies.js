@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchResults from '../SearchResults/SearchResults';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { handleDuration, filterWithDuration } from '../../utils/utils';
+import { handleDuration, filterByDuration } from '../../utils/utils';
 
 function Movies() {
 	const context = React.useContext(CurrentUserContext);
@@ -54,7 +54,7 @@ function Movies() {
 		// если стоит чек-бокс, берем короткометражки
 		let renderedFilms;
 		if (shortFilmsCheckboxValue) {
-			renderedFilms = filterWithDuration(movies);
+			renderedFilms = filterByDuration(movies);
 		} else {
 			renderedFilms = [...movies];
 		}

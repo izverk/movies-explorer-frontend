@@ -38,7 +38,6 @@ function Login({ loginUser, formSubmitError, setFormSubmitError }) {
 				labelText='E-mail'
 				type='email'
 				name='emailInput'
-				id='emailInput'
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}
@@ -48,7 +47,7 @@ function Login({ loginUser, formSubmitError, setFormSubmitError }) {
 				labelText='Пароль'
 				type='password'
 				name='passwordInput'
-				id='passwordInput'
+				minLength={6}
 				required={true}
 				values={values}
 				handleValuesChange={handleValuesChange}

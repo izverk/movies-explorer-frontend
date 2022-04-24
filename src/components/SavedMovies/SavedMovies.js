@@ -5,7 +5,7 @@ import Preloader from '../Preloader/Preloader';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import SearchResults from '../SearchResults/SearchResults';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { handleDuration, filterWithDuration } from '../../utils/utils';
+import { handleDuration, filterByDuration } from '../../utils/utils';
 import {} from '../../utils/constants';
 
 function SavedMovies() {
@@ -35,7 +35,7 @@ function SavedMovies() {
 		}
 		// если стоит чек-бокс, фильтруем короткометражки
 		if (shortSavedFilmsCheckboxValue) {
-			renderedFilms = filterWithDuration(renderedFilms);
+			renderedFilms = filterByDuration(renderedFilms);
 		}
 		// // дополнительно проверяем не пустой ли массив
 		// if (!renderedFilms.length) {
