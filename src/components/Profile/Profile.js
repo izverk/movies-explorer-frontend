@@ -106,8 +106,8 @@ function Profile() {
 						type='text'
 						name='nameInput'
 						required
-						minLength='2'
-						maxLength='30'
+						minLength='3'
+						maxLength='16'
 						value={values.nameInput || ''}
 						onChange={handleValuesChange}
 					/>
