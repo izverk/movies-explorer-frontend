@@ -46,11 +46,6 @@ function SearchForm() {
 		setBadSearchResult(null);
 		setIsPreloaderVisible(true);
 		getAndFilterMovies();
-
-		console.log(
-			'🚀 ~ file: SearchForm.js ~ line 50 ~ handleMoviesSearchClick ~ handleMoviesSearchClick',
-			'ЗАПУЩЕНА handleMoviesSearchClick'
-		);
 	};
 
 	// Обработка клика кнопки поиска сохраненных фильмов (для роута /saved-movies)
@@ -70,10 +65,6 @@ function SearchForm() {
 	const getAndFilterMovies = () => {
 		// Если запрос первичный, обращаемся к серверу, а если нет, берем ранее уже полученный массив из стейта
 		if (isFirstSearchHappened) {
-			console.log(
-				'🚀 ~ file: SearchForm.js ~ line 156 ~ getAndFilterMovies ~ getAndFilterMovies',
-				'ЗАПУЩЕНА getAndFilterMovies блок isFirstSearchHappened тру'
-			);
 			moviesApi
 				.getMovies()
 				.then((data) => {
@@ -109,10 +100,6 @@ function SearchForm() {
 						setIsPreloaderVisible(false);
 						// если ничего не найдено просто выводим сообщение, ничего не сохраняя
 						setBadSearchResult(nothingFoundMessageText);
-						console.log(
-							'🚀 ~ file: SearchForm.js ~ line 156 ~ getAndFilterMovies ~ getAndFilterMovies',
-							'СРАБОТАЛ блок setBadSearchResult'
-						);
 					}
 				})
 				.catch((err) => {
@@ -255,47 +242,3 @@ function SearchForm() {
 }
 
 export default SearchForm;
-
-// // Функция получения от стороннего сервиса фильмов и фильтрации (по ключевому слову) для роута /movies
-// 	const getAndFilterMovies = () => {
-// 		moviesApi
-// 			.getMovies()
-// 			.then((data) => {
-// 				// формируем и обрабатываем поля объектов исходного массива фильмов
-// 				data = handleFields(data);
-// 				// фильтруем по ключевому слову (фильтрация по чек-боксу короткометражек делается уже потом в Movies, что бы разнести логику работы этих фильтров, т.к. чек-бокс включает/выключает фильтрацию каждый раз при изменении своего значения, а инпут - нет. При этом чек-боксом фильтруется именно этот массив, который получен из данного значения инпута и поменяется этот массив только при следующем нажатии кнопки поиска)
-// 				const filteredByKeyWord = filterByKeyWord(data, moviesInputValue);
-// 				// сохраняем в стейт для дальнейшего использования при рендеринге
-// 				setMovies(filteredByKeyWord);
-// 				// если установлен чек-бокс, фильтруем по длительности, что бы понять итоговый результат и принять решение о сохранении поиска
-// 				let finallyFiltered = [];
-// 				if (shortFilmsCheckboxValue) {
-// 					finallyFiltered = filterByDuration(filteredByKeyWord);
-// 				} else {
-// 					finallyFiltered = filteredByKeyWord;
-// 				}
-// 				// при удачном поиске сохраняем его
-// 				if (finallyFiltered.length) {
-// 					localStorage.setItem('movies', JSON.stringify(finallyFiltered));
-// 					localStorage.setItem(
-// 						'shortFilmsCheckboxValue',
-// 						shortFilmsCheckboxValue
-// 					);
-// 					localStorage.setItem('moviesInputValue', moviesInputValue);
-// 					// убираем прелоадер
-// 					setIsPreloaderVisible(false);
-// 				} else {
-// 					// убираем прелоадер
-// 					setIsPreloaderVisible(false);
-// 					// если ничего не найдено просто выводим сообщение, ничего не сохраняя
-// 					setBadSearchResult(nothingFoundMessageText);
-// 				}
-// 			})
-// 			.catch((err) => {
-// 				console.log(err);
-// 				// убираем прелоадер
-// 				setIsPreloaderVisible(false);
-// 				// выводим ошибку получения/обработки данных
-// 				setBadSearchResult(queryErrorMessageText);
-// 			});
-// 	};
