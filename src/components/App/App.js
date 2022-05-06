@@ -1,73 +1,280 @@
-import React, { useState } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React from 'react';
+import { Route, Switch, useHistory, Redirect } from 'react-router-dom';
 import './App.css';
-import Header from '../Header/Header'
-import Main from '../Main/Main'
-import Footer from '../Footer/Footer'
-import Movies from '../Movies/Movies'
-import SavedMovies from '../SavedMovies/SavedMovies'
-import Profile from '../Profile/Profile'
-import Login from '../Login/Login'
-import Register from '../Register/Register'
-import Page404 from '../Page404/Page404'
+import Header from '../Header/Header';
+import Main from '../Main/Main';
+import Footer from '../Footer/Footer';
+import Movies from '../Movies/Movies';
+import SavedMovies from '../SavedMovies/SavedMovies';
+import Profile from '../Profile/Profile';
+import Login from '../Login/Login';
+import Register from '../Register/Register';
+import Page404 from '../Page404/Page404';
 import ModalMenu from '../ModalMenu/ModalMenu';
+import mainApi from '../../utils/MainApi';
+import { CurrentUserContext } from '../../contexts/CurrentUserContext';
+import { formSubmitErrorText, PAGE_WITHOUT_AUT } from '../../utils/constants';
+import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
-function App() {
+function App(props) {
+	const history = useHistory();
+	const location = useLocation();
 
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [isMoviesLoading] = useState(false);
-  const [isSavedMoviesLoading] = useState(false);
-  const [modalMenuState, setModalMenuState] = useState(false);
-  const changeModalMenuState = () => { setModalMenuState(!modalMenuState) };
+	// Стейт модального меню навигации
+	const [modalMenuState, setModalMenuState] = React.useState(false);
+	const changeModalMenuState = () => {
+		setModalMenuState((modalMenuState) => !modalMenuState);
+	};
 
-  return (
-    <div className='app'>
-      <Switch>
+	// =================== ТЕКУЩИЙ ПОЛЬЗОВАТЕЛЬ - РЕГИСТРАЦИЯ, АВТОРИЗАЦИЯ, ЗАГРУЗКА ФИЛЬМОВ из БД ===================
 
-        <Route path='/signin'>
-          <Login />
-        </Route>
+	// Стейт с данными текущего пользователя
+	const [currentUser, setCurrentUser] = React.useState({});
 
-        <Route path='/signup'>
-          <Register />
-        </Route>
+	// Стейт авторизованности пользователя
+	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
-        <Route path='/'>
-          <Switch>
+	// Стейт сообщения с ошибкой отправки формы ввода данных
+	const [formSubmitError, setFormSubmitError] = React.useState(null);
 
-            <Route exact path='/'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-              <Main />
-              <Footer />
-            </Route>
+	// Функция регистрации пользователя
+	function registerUser({ name, email, password }) {
+		mainApi
+			.register(name, email, password)
+			.then((userData) => {
+				loginUser({ email, password });
+			})
+			.catch((err) => {
+				console.log(err);
+				// выводим ошибку отправки данных в компоненте AuthForm
+				setFormSubmitError(formSubmitErrorText);
+			});
+	}
 
-            <Route path='/movies'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-              <Movies isMoviesLoading={isMoviesLoading} />
-              <Footer />
-            </Route>
+	// Функция авторизации пользователя
+	function loginUser({ email, password }) {
+		mainApi
+			.login(email, password)
+			.then(({ token }) => {
+				if (token) {
+					localStorage.setItem('token', token);
+					mainApi.setTokenHeaders(token);
+					checkTokenAndLoadContent();
+				} else {
+					return;
+				}
+			})
+			.catch((err) => {
+				console.log(err);
+				// выводим ошибку отправки данных в компоненте AuthForm
+				setFormSubmitError(formSubmitErrorText);
+			});
+	}
 
-            <Route path='/saved-movies'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-              <SavedMovies isSavedMoviesLoading={isSavedMoviesLoading} />
-              <Footer />
-            </Route>
+	// Функция проверки токена и загрузки контента
+	// текущего пользователя (сохраненных фильмов из БД)
+	const checkTokenAndLoadContent = React.useCallback(() => {
+		const token = localStorage.getItem('token');
+		if (token) {
+			// запрашиваем у сервера проверку токена
+			mainApi
+				.checkToken(token)
+				.then((userData) => {
+					// сохраняем юзера в стейт
+					setCurrentUser({
+						name: userData.name,
+						_id: userData._id,
+						email: userData.email,
+					});
+					setIsLoggedIn(true);
+					// устанавливаем токен в заголовки запросов
+					mainApi.setTokenHeaders(token);
+				})
+				.then(() => {
+					// запрашиваем у сервера сохраненные фильмы текущего пользователя
+					mainApi
+						.getCards()
+						.then((data) => {
+							// добавляем их в стейт
+							setSavedMovies(data);
+						})
+						// .then(() => {
+						// 	// // редиректим авторизовавшегося пользователя на страницу фильмов
+						// 	history.push('/movies');
+						// })
+						// редирект делается ниже в useEffect
+						.catch((err) => {
+							console.log(err);
+						});
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
+	}, []);
 
-            <Route path='/profile'>
-              <Header loggedIn={loggedIn} openModalMenu={changeModalMenuState} />
-              <Profile loggedIn={loggedIn} setLoggedIn={setLoggedIn} />
-            </Route>
+	// Запускаем проверку токена и загрузку контента текущего пользователя
+	React.useEffect(() => {
+		checkTokenAndLoadContent();
+	}, [checkTokenAndLoadContent]);
 
-            <Route path='*'>
-              <Page404 />
-            </Route>
-          </Switch>
-        </Route>
+	// Обеспечиваем правильный редирект при вводе пользователем маршрута в строку адреса браузера
+	// (Если пользователь залогинен, то на страницу /movies он попадет только если в строке адреса указана страница авторизации или регистрации, а если наберет в строке другую локацию, то на неё и попадет. Если же будет не залогинен, то дальше при рендеринге произойдет редирект, за который отвечают соответствующий код внутри Route)
+	React.useEffect(() => {
+		if (isLoggedIn) {
+			if (PAGE_WITHOUT_AUT.includes(location.pathname)) {
+				history.push('/movies');
+			} else {
+				history.push(location.pathname);
+			}
+		}
+	}, [history, isLoggedIn, location.pathname]);
 
-      </Switch>
-      <ModalMenu modalMenuState={modalMenuState} closeModalMenu={changeModalMenuState} />
-    </div>
-  );
+	// =================== Стейты для работы С КАРТОЧКАМИ ФИЛЬМОВ ===================
+
+	// Стейт с массивом исходных фильмов со стороннего сервиса
+	const [initialMovies, setInitialMovies] = React.useState([]);
+	// Стейт с массивом найденных фильмов по ключевому слову
+	const [movies, setMovies] = React.useState([]);
+	// Стейт с массивом фильмов, передаваемый для отрисовки в MoviesCardList (в нем уже сделан выбор между полным списком и короткометражками, а также преобразовано поле - duration). Для страниц /movies и /saved-movies это разные списки.
+	const [renderedMovies, setRenderedMovies] = React.useState([]);
+	// Стейт с массивом сохраненных фильмов
+	const [savedMovies, setSavedMovies] = React.useState([]);
+	// Стейт  с массивом сохраненных фильмов отфильтрованных по ключевому слову (в SavedMovies по нему проводится проверка и если он пустой, выбирается другой - исходный массив сохраненных фильмов для отрисовки))
+	const [filteredSavedMovies, setFilteredSavedMovies] = React.useState([]);
+	// Стейт со значением инпута формы поиска фильмов
+	const [moviesInputValue, setMoviesInputValue] = React.useState('');
+	// Стейт со значением инпута формы поиска сохраненных фильмов
+	const [savedMoviesInputValue, setSavedMoviesInputValue] = React.useState('');
+	// Стейт со значением чек-бокса короткометражек
+	const [shortFilmsCheckboxValue, setShortFilmsCheckboxValue] =
+		React.useState(false);
+	// Стейт со значением чек-бокса короткометражек сохраненных фильмов
+	const [shortSavedFilmsCheckboxValue, setShortSavedFilmsCheckboxValue] =
+		React.useState(false);
+	// Стейт прелоадера для его отрисовки в момент загрузки фильмов
+	const [isPreloaderVisible, setIsPreloaderVisible] = React.useState(false);
+	// Стейт сообщения с результатом поиска фильмов (потом сюда попадает строка, стейт используется и для условного рендеринга компонентов, и для отображения самого текста сообщения)
+	const [badSearchResult, setBadSearchResult] = React.useState(null);
+	// Стейт, отражающий факт того, что текущим пользователем запущен первый запрос фильмов (очищается при выходе из аккаунта, так же как и стейты isLoggedIn, currentUser и результаты поиска фильмов в локальном хранилище)
+	const [isFirstSearchHappened, setIsFirstSearchHappened] =
+		React.useState(false);
+
+	return (
+		<CurrentUserContext.Provider
+			value={{
+				modalMenuState,
+				setModalMenuState,
+				currentUser,
+				setCurrentUser,
+				isLoggedIn,
+				setIsLoggedIn,
+				formSubmitError,
+				setFormSubmitError,
+				initialMovies,
+				setInitialMovies,
+				movies,
+				setMovies,
+				savedMovies,
+				setSavedMovies,
+				filteredSavedMovies,
+				setFilteredSavedMovies,
+				renderedMovies,
+				setRenderedMovies,
+				moviesInputValue,
+				setMoviesInputValue,
+				savedMoviesInputValue,
+				setSavedMoviesInputValue,
+				shortFilmsCheckboxValue,
+				setShortFilmsCheckboxValue,
+				shortSavedFilmsCheckboxValue,
+				setShortSavedFilmsCheckboxValue,
+				isPreloaderVisible,
+				setIsPreloaderVisible,
+				badSearchResult,
+				setBadSearchResult,
+				isFirstSearchHappened,
+				setIsFirstSearchHappened,
+			}}>
+			<div className='app'>
+				<Switch>
+					<Route exact path='/signin'>
+						{/* защита от возврата на экран авторизации */}
+						{() =>
+							isLoggedIn ? (
+								<Redirect to='/movies' />
+							) : (
+								<Login
+									loginUser={loginUser}
+									formSubmitError={formSubmitError}
+									setFormSubmitError={setFormSubmitError}
+								/>
+							)
+						}
+					</Route>
+
+					<Route exact path='/signup'>
+						{/* защита от возврата на экран регистрации */}
+						{() =>
+							isLoggedIn ? (
+								<Redirect to='/movies' />
+							) : (
+								<Register
+									registerUser={registerUser}
+									formSubmitError={formSubmitError}
+									setFormSubmitError={setFormSubmitError}
+								/>
+							)
+						}
+					</Route>
+
+					<Route exact path={['/', '/movies', '/saved-movies', '/profile']}>
+						<Header
+							isLoggedIn={isLoggedIn}
+							openModalMenu={changeModalMenuState}
+						/>
+
+						<Switch>
+							<Route exact path='/'>
+								<Main />
+							</Route>
+
+							<Route path='/movies'>
+								{/* защита маршрута */}
+								{() => (!isLoggedIn ? <Redirect to='/' /> : <Movies />)}
+							</Route>
+							<Route path='/saved-movies'>
+								{/* защита маршрута */}
+								{() =>
+									!isLoggedIn ? (
+										<Redirect to='/' />
+									) : (
+										<SavedMovies savedMovies={savedMovies} />
+									)
+								}
+							</Route>
+							<Route path='/profile'>
+								{/* защита маршрута */}
+								{() => (!isLoggedIn ? <Redirect to='/' /> : <Profile />)}
+							</Route>
+						</Switch>
+
+						<Route exact path={['/', '/movies', '/saved-movies']}>
+							<Footer />
+						</Route>
+					</Route>
+
+					<Route path='*'>
+						<Page404 />
+					</Route>
+				</Switch>
+				<ModalMenu
+					modalMenuState={modalMenuState}
+					closeModalMenu={changeModalMenuState}
+				/>
+			</div>
+		</CurrentUserContext.Provider>
+	);
 }
 
 export default App;

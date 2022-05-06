@@ -25,7 +25,7 @@
 	margin-bottom: auto;
 }
 
-.auth-form__input-error {
+.auth-form__submit-error {
 	padding-top: 10px;
 	display: block;
 	font-weight: 400;
@@ -34,7 +34,7 @@
 	color: #ff3055;
 	visibility: hidden;
 }
-.auth-form__input-error_active {
+.auth-form__submit-error_active {
 	visibility: visible;
 }
 
@@ -55,6 +55,16 @@
 	line-height: 17px;
 	text-align: center;
 	color: #ffffff;
+}
+.auth-form__submit-button_inactive {
+	color: #000;
+	background: transparent;
+	border: 1px solid #000;
+	opacity: 0.4;
+	cursor: initial;
+}
+.auth-form__submit-button_inactive:hover {
+	opacity: 0.4;
 }
 
 .auth-form__link-wrapper {
