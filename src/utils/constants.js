@@ -8,8 +8,8 @@ export const moviesApiConfig = {
 
 // Конфиг API основного сервера приложения
 export const mainApiConfig = {
-	// baseUrl: 'http://localhost:3001/api/',
-	baseUrl: 'https://api.movies-explorer.izver.nomoredomains.work/api/',
+	baseUrl: 'http://localhost:3001/api/',
+	// baseUrl: 'https://api.movies-explorer.izver.nomoredomains.work/api/',
 	headers: {
 		'Content-Type': 'application/json',
 	},

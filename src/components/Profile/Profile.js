@@ -35,7 +35,7 @@ function Profile() {
 		setMovies([]);
 		setMoviesInputValue('');
 		setShortFilmsCheckboxValue(false);
-		setIsFirstSearchHappened(true);
+		setIsFirstSearchHappened(false);
 		try {
 			localStorage.removeItem('token');
 			localStorage.removeItem('movies');
