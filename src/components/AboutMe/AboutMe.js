@@ -1,39 +1,54 @@
 import React from 'react';
 import './AboutMe.css';
-import authorPhoto from '../../images/img_user_photo.jpg';
+import authorPhoto from '../../images/img_me_photo.jpeg';
 import SectionTitle from '../SectionTitle/SectionTitle';
 import Portfolio from '../Portfolio/Portfolio';
 
 function AboutMe() {
-    return (
-        <section className='about-me' id='about-me'>
-            <SectionTitle>
-                Студент
-            </SectionTitle>
-            <div className='about-me__table'>
-                <img className='about-me__photo-column' src={authorPhoto} alt='Фото автора сайта'></img>
-                <div className='about-me__info-column'>
-                    <h3 className='about-me__name'>
-                        Виталий
-                    </h3>
-                    <p className='about-me__job'>
-                        Фронтенд-разработчик, 30 лет
-                    </p>
-                    <p className='about-me__topic'>
-                        Я родился и живу в Саратове, закончил факультет экономики СГУ. У меня есть жена
-                        и дочь. Я люблю слушать музыку, а ещё увлекаюсь бегом. Недавно начал кодить. С 2015 года работал в компании «СКБ Контур». После того, как прошёл курс по веб-разработке, начал заниматься фриланс-заказами и ушёл с постоянной работы.
-                    </p>
-                    <a className='app__link about-me__link' href='https://ru-ru.facebook.com' rel='noreferrer' target='_blank' title='https://ru-ru.facebook.com'>
-                        Facebook
-                    </a>
-                    <a className='app__link about-me__link' href='https://github.com/izverk' rel='noreferrer' target='_blank' title='Моя страница на Github'>
-                        Github
-                    </a>
-                </div>
-            </div>
-            <Portfolio />
-        </section>
-    );
+	return (
+		<section className='about-me' id='about-me'>
+			<SectionTitle>Студент</SectionTitle>
+			<div className='about-me__table'>
+				<img
+					className='about-me__photo-column'
+					src={authorPhoto}
+					alt='Фото автора сайта'></img>
+				<div className='about-me__info-column'>
+					<h3 className='about-me__name'>Илья</h3>
+					<p className='about-me__job'>Фронтенд-разработчик, 43 года</p>
+					<p className='about-me__topic'>
+						Я родился и вырос в Хабаровске. Закончил университет (СибГУТИ) по
+						специальности радиосвязь. Получил большой стаж работы в сфере
+						госуправления телекоммуникациями. В 2019 вместе с семьёй переехал в
+						Санкт-Петербург. Семья дружная - жена и три дочери. Мои увлечения -
+						музыка, спорт, а с недавнего времени и программирование. В какой-то
+						момент осознал необходимость дальнейшего развития и прошел курс
+						обучения в Яндекс-Практикуме по специальности веб-разработка
+						(закончил весной 2022 года). Сейчас продолжаю самостоятельное
+						изучение этой интересной области, имея целью стать профессионалом и
+						участвовать в создании востребованных цифровых продуктов.
+					</p>
+					<a
+						className='app__link about-me__link'
+						href='https://ru-ru.facebook.com'
+						rel='noreferrer'
+						target='_blank'
+						title='https://ru-ru.facebook.com'>
+						Facebook
+					</a>
+					<a
+						className='app__link about-me__link'
+						href='https://github.com/izverk?tab=repositories'
+						rel='noreferrer'
+						target='_blank'
+						title='Моя страница на Github'>
+						Github
+					</a>
+				</div>
+			</div>
+			<Portfolio />
+		</section>
+	);
 }
 
 export default AboutMe;
