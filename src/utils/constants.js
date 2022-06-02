@@ -16,7 +16,7 @@ export const mainApiConfig = {
 };
 
 // Страницы, не требующие авторизации
-export const PAGE_WITHOUT_AUT = ['/signup', '/signin'];
+export const PAGES_WITHOUT_AUT = ['/signup', '/signin'];
 
 // URL сервера для API получения фильмов для преобразования относительных ссылок на изображения фильмов в абсолютные
 export const moviesApiURL = 'https://api.nomoreparties.co';

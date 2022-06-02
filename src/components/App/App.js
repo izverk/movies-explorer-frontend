@@ -13,7 +13,7 @@ import Page404 from '../Page404/Page404';
 import ModalMenu from '../ModalMenu/ModalMenu';
 import mainApi from '../../utils/MainApi';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
-import { formSubmitErrorText, PAGE_WITHOUT_AUT } from '../../utils/constants';
+import { formSubmitErrorText, PAGES_WITHOUT_AUT } from '../../utils/constants';
 import { useLocation } from 'react-router-dom/cjs/react-router-dom.min';
 
 function App(props) {
@@ -32,7 +32,9 @@ function App(props) {
 	const [currentUser, setCurrentUser] = React.useState({});
 
 	// Стейт авторизованности пользователя
-	const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+	const [isLoggedIn, setIsLoggedIn] = React.useState(
+		localStorage.getItem('token') ? true : false
+	);
 
 	// Стейт сообщения об ошибке отправки формы ввода регистрационных данных
 	const [formSubmitError, setFormSubmitError] = React.useState(null);
@@ -118,17 +120,12 @@ function App(props) {
 		checkTokenAndLoadContent();
 	}, [checkTokenAndLoadContent]);
 
-	// Обеспечиваем правильный редирект при вводе пользователем маршрута в строку адреса браузера
-	// (Если пользователь логинится, то автоматически попадает на страницу /movies со страниц авторизации или регистрации. Если залогиненный пользователь наберет в строке адреса любой из существующих маршрутов, то на него и перейдет. Для определения авторизованности использовал токен из хранилища, а не стейт isLoggedIn, т.к. стейт слетает при вводе маршрута в строку адреса (компонент App и все вложенные компоненты монтируются заново ---> все стейты заново принимают исходные значения))
+	// Обеспечиваем редирект после логина на страницу /movies со страниц авторизации или регистрации
 	React.useEffect(() => {
-		if (localStorage.getItem('token')) {
-			if (PAGE_WITHOUT_AUT.includes(location.pathname)) {
-				history.push('/movies');
-			} else {
-				history.push(location.pathname);
-			}
+		if (isLoggedIn && PAGES_WITHOUT_AUT.includes(location.pathname)) {
+			history.push('/movies');
 		}
-	}, [history, isLoggedIn, location.pathname]);
+	}, [isLoggedIn, history, location.pathname]);
 
 	// =================== Стейты для работы С КАРТОЧКАМИ ФИЛЬМОВ ===================
 
